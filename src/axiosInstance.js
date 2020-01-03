@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000"
+  baseURL: "http://5e0f4ab89576aa0014666553.mockapi.io"
 });
 
 export { axiosInstance };
