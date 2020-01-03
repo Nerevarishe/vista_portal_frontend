@@ -14,12 +14,12 @@ class NewsPage extends Component {
     limit: 10
   };
 
-  componentDidMount(prevState) {
+  componentDidMount() {
     this.fetchNews();
   }
 
-  componentDidUpdate(prevState) {
-    if (prevState.page === this.state.page) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.page !== this.state.page) {
       this.fetchNews();
     }
   }
