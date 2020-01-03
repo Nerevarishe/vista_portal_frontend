@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 import { axiosInstance as axios } from "../axiosInstance";
 
+import AddNewsPostButton from "../components/buttons/AddNewsPostButton";
 import NextButton from "../components/buttons/NextButton";
 import PrevButton from "../components/buttons/PrevButton";
 
@@ -35,6 +37,11 @@ class NewsPage extends Component {
       });
   };
 
+  redirectToAddNewsPostPage = () => {
+    console.log("Button Pressed");
+    return <Redirect to="/news/add_news/post" />;
+  };
+
   prevButtonHandler = prevState => {
     this.setState(prevState => ({ page: prevState.page - 1 }));
   };
@@ -47,6 +54,7 @@ class NewsPage extends Component {
     return (
       <div>
         <p>News Page</p>
+        <AddNewsPostButton btnClicked={this.redirectToAddNewsPostPage} />
         {this.state.news.map(post => (
           <div key={post.id} className={classes.newsPostCard}>
             <p>{post.postBody}</p>
