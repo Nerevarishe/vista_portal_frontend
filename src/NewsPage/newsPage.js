@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+
+import { Redirect } from "react-router";
 
 import { axiosInstance as axios } from "../axiosInstance";
 
@@ -13,14 +14,15 @@ class NewsPage extends Component {
   state = {
     news: [],
     page: 1,
-    limit: 10
+    limit: 10,
+    redirect: false
   };
 
   componentDidMount() {
     this.fetchNews();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevState.page !== this.state.page) {
       this.fetchNews();
     }
@@ -37,9 +39,9 @@ class NewsPage extends Component {
       });
   };
 
-  redirectToAddNewsPostPage = () => {
+  setRedirect = () => {
     console.log("Button Pressed");
-    return <Redirect to="/news/add_news/post" />;
+    this.setState({redirect: true})
   };
 
   prevButtonHandler = prevState => {
@@ -51,10 +53,13 @@ class NewsPage extends Component {
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/news/add_news_post" />;
+    }
     return (
       <div>
         <p>News Page</p>
-        <AddNewsPostButton btnClicked={this.redirectToAddNewsPostPage} />
+        <AddNewsPostButton btnClicked={this.setRedirect} />
         {this.state.news.map(post => (
           <div key={post.id} className={classes.newsPostCard}>
             <p>{post.postBody}</p>

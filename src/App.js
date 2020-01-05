@@ -19,10 +19,10 @@ function App() {
         <NavigationBar />
         <Switch>
           <Route exact path="/" component={NewsPage} />
-          <Route path="/news" component={NewsPage} />
-          <Route path="/news/add_news_post" component={AddNewsPage} />
-          <Route path="/defectura" component={Defectura} />
-          <Route exact path="*" component={NotFound} />
+          <Route exact path="/news" component={NewsPage} />
+          <Route exact path="/news/add_news_post" component={AddNewsPage} />
+          <Route exact path="/defectura" component={Defectura} />
+          <Route path="*" component={NotFound} />
         </Switch>
       </Router>
     </div>
