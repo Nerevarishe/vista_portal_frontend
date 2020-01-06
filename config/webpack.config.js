@@ -1,6 +1,7 @@
 "use strict";
 
 const { styles } = require("@ckeditor/ckeditor5-dev-utils");
+const CKEditorWebpackPlugin = require("@ckeditor/ckeditor5-dev-webpack-plugin");
 
 const fs = require("fs");
 const path = require("path");
@@ -575,6 +576,11 @@ module.exports = function(webpackEnv) {
             : undefined
         )
       ),
+      // CKEditor5 language settings
+      new CKEditorWebpackPlugin({
+        // The UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
+        language: "ru"
+      }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
