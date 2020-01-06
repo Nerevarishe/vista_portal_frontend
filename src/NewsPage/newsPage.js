@@ -14,7 +14,7 @@ class NewsPage extends Component {
   state = {
     news: [],
     page: 1,
-    limit: 10,
+    per_page: 10,
     redirect: false
   };
 
@@ -30,9 +30,9 @@ class NewsPage extends Component {
 
   fetchNews = () => {
     axios
-      .get("/news/?page=" + this.state.page + "&limit=" + this.state.limit)
+      .get("/news/?page=" + this.state.page + "&per_page=" + this.state.per_page)
       .then(response => {
-        this.setState({ news: response.data });
+        this.setState({ news: response.data["posts"] });
       })
       .catch(error => {
         console.log(error);
@@ -61,8 +61,8 @@ class NewsPage extends Component {
         <p>News Page</p>
         <AddNewsPostButton btnClicked={this.setRedirect} />
         {this.state.news.map(post => (
-          <div key={post.id} className={classes.newsPostCard}>
-            <p>{post.postBody}</p>
+          <div key={post._id["$oid"]} className={classes.newsPostCard}>
+            <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
           </div>
         ))}
         <PrevButton btnClicked={this.prevButtonHandler} />
