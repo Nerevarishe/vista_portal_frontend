@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 
 import { axiosInstance as axios } from "../axiosInstance";
+import moment from "moment";
 
 import AddNewsPostButton from "../components/buttons/AddNewsPostButton";
 import NextButton from "../components/buttons/NextButton";
@@ -68,6 +69,9 @@ class NewsPage extends Component {
         <AddNewsPostButton btnClicked={this.setRedirect} />
         {this.state.news.map(post => (
           <div key={post._id["$oid"]} className={classes.newsPostCard}>
+            <p>
+              {moment.unix(post.date_created["$date"]).format("DD-MM-YYYY")}
+            </p>
             <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
           </div>
         ))}
