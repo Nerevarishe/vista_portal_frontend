@@ -13,6 +13,8 @@ import classes from "./newsPage.module.css";
 class NewsPage extends Component {
   state = {
     news: [],
+    postsPageHasNext: null,
+    postsPageHasPrev: null,
     page: 1,
     per_page: 10,
     redirect: false
@@ -30,9 +32,13 @@ class NewsPage extends Component {
 
   fetchNews = () => {
     axios
-      .get("/news/?page=" + this.state.page + "&per_page=" + this.state.per_page)
+      .get("/news?page=" + this.state.page + "&per_page=" + this.state.per_page)
       .then(response => {
-        this.setState({ news: response.data["posts"] });
+        this.setState({
+          news: response.data["posts"],
+          postsPageHasNext: response.data["postsPageHasNext"],
+          postsPageHasPrev: response.data["postsPageHasPrev"]
+        });
       })
       .catch(error => {
         console.log(error);
@@ -41,7 +47,7 @@ class NewsPage extends Component {
 
   setRedirect = () => {
     console.log("Button Pressed");
-    this.setState({redirect: true})
+    this.setState({ redirect: true });
   };
 
   prevButtonHandler = prevState => {
@@ -65,8 +71,14 @@ class NewsPage extends Component {
             <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
           </div>
         ))}
-        <PrevButton btnClicked={this.prevButtonHandler} />
-        <NextButton btnClicked={this.nextButtonHandler} />
+        <PrevButton
+          btnClicked={this.prevButtonHandler}
+          isDisabled={this.state.postsPageHasNext}
+        />
+        <NextButton
+          btnClicked={this.nextButtonHandler}
+          isDisabled={this.state.postsPageHasPrev}
+        />
       </div>
     );
   }
