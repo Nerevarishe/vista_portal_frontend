@@ -9,7 +9,7 @@ import AddNewsPostButton from "../components/buttons/AddNewsPostButton";
 import NextButton from "../components/buttons/NextButton";
 import PrevButton from "../components/buttons/PrevButton";
 
-import classes from "./newsPage.module.css";
+import classes from "./newsPage.module.css"; 
 
 class NewsPage extends Component {
   state = {
@@ -70,7 +70,7 @@ class NewsPage extends Component {
         {this.state.news.map(post => (
           <div key={post._id["$oid"]} className={classes.newsPostCard}>
             <p>
-              {moment.unix(post.date_created["$date"]).format("DD-MM-YYYY")}
+              {moment(post.date_created["$date"]).local().format("DD-MM-YYYY HH:MM")}
             </p>
             <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
           </div>
