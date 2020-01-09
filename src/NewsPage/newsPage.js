@@ -8,8 +8,11 @@ import moment from "moment";
 import AddNewsPostButton from "../components/buttons/AddNewsPostButton";
 import NextButton from "../components/buttons/NextButton";
 import PrevButton from "../components/buttons/PrevButton";
+import Edit from "../components/buttons/Edit";
+import Delete from "../components/buttons/Delete";
 
-import classes from "./newsPage.module.css"; 
+import classes from "./newsPage.module.css";
+
 
 class NewsPage extends Component {
   state = {
@@ -18,7 +21,8 @@ class NewsPage extends Component {
     postsPageHasPrev: null,
     page: 1,
     per_page: 10,
-    redirect: false
+    redirect: false,
+    editedPostId: ''
   };
 
   componentDidMount() {
@@ -47,8 +51,18 @@ class NewsPage extends Component {
   };
 
   setRedirect = () => {
-    console.log("Button Pressed");
-    this.setState({ redirect: true });
+    this.setState({redirect: true });
+  };
+
+  editNewsHandler = (newsPostId) => {
+    this.setState({
+      editedPostId: newsPostId,
+      redirect: true
+    })
+  };
+
+  deleteNewsHandler = () => {
+
   };
 
   prevButtonHandler = prevState => {
@@ -68,11 +82,15 @@ class NewsPage extends Component {
         <p>News Page</p>
         <AddNewsPostButton btnClicked={this.setRedirect} />
         {this.state.news.map(post => (
-          <div key={post._id["$oid"]} className={classes.newsPostCard}>
+          <div key={post["_id"]["$oid"]} className={classes.newsPostCard}>
             <p>
-              {moment(post.date_created["$date"]).local().format("DD-MM-YYYY HH:MM")}
+              {moment(post["date_created"]["$date"]).local().format("DD-MM-YYYY HH:mm")}
             </p>
             <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
+            <div>
+              <Edit btnClicked={this.editNewsHandler.bind(post["_id"]["$oid"])} />
+              <Delete btnClicked={this.deleteNewsHandler}/>
+            </div>
           </div>
         ))}
         <PrevButton
