@@ -6,7 +6,7 @@ import "./App.css";
 
 import NavigationBar from "./NavigationBar";
 
-import NewsPage from "./NewsPage/newsPage";
+import NewsPage from "./NewsPage/NewsPage";
 import AddNewsPage from "./NewsPage/AddNewsPage";
 
 import Defectura from "./Defectura";

@@ -11,7 +11,7 @@ import PrevButton from "../components/buttons/PrevButton";
 import Edit from "../components/buttons/Edit";
 import Delete from "../components/buttons/Delete";
 
-import classes from "./newsPage.module.css";
+import classes from "./NewsPage.module.css";
 
 
 class NewsPage extends Component {

@@ -1,1 +1,1 @@
-export { default } from "./defectura";
+export { default } from "./Defectura";

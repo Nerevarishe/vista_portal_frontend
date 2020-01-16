@@ -1,1 +1,1 @@
-export { default } from "./newsPage";
+export { default } from "./NewsPage";
