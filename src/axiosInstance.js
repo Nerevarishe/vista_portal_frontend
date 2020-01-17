@@ -1,7 +1,7 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
-let authToken, refreshToken = '';
+let accessToken, refreshToken = '';
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5000"
@@ -9,13 +9,13 @@ const axiosInstance = axios.create({
 
 // Function that will be called to refresh authorization
 const refreshAuthLogic = failedRequest => axiosInstance.post('/auth/refresh',
-  { headers: {
+  {},{ headers: {
     Authorization: "Bearer " + refreshToken
   }}).then(tokenRefreshResponse => {
     // localStorage.setItem('token', tokenRefreshResponse.data.token);
-    authToken = tokenRefreshResponse.data["authToken"];
-    refreshToken = tokenRefreshResponse.data["refreshToken"];
-    failedRequest.response.config.headers['Authorization'] = 'Bearer ' + tokenRefreshResponse.data["authToken"];
+    accessToken = tokenRefreshResponse.data["access_token"];
+    refreshToken = tokenRefreshResponse.data["refresh_token"];
+    failedRequest.response.config.headers['Authorization'] = 'Bearer ' + tokenRefreshResponse.data["access_token"];
     return Promise.resolve();
 });
 
@@ -23,12 +23,13 @@ const refreshAuthLogic = failedRequest => axiosInstance.post('/auth/refresh',
 const userLogin = (username, password) => {
   axiosInstance.post('/auth/login', {'username': username, password: password})
     .then(response => {
-      authToken = response.data["authToken"];
-      refreshToken = response.data["refreshToken"];
+      console.log(response.data);
+      accessToken = response.data["access_token"];
+      refreshToken = response.data["refresh_token"];
     })
     .catch(error => console.log(error))
 };
 
 createAuthRefreshInterceptor(axiosInstance, refreshAuthLogic);
 
-export { axiosInstance, authToken, refreshToken, userLogin};
+export { axiosInstance, accessToken, refreshToken, userLogin};

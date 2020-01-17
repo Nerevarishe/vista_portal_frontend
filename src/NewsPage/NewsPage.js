@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 import { Redirect } from "react-router";
 
-import {authToken, axiosInstance as axios} from "../axiosInstance";
+import {accessToken, axiosInstance as axios} from "../axiosInstance";
 import moment from "moment";
 
 import AddNewsPostButton from "../components/buttons/AddNewsPostButton";
@@ -58,7 +58,7 @@ const NewsPage = () => {
     // TODO: Implement modal with delete confirmation
     axios.delete('/news/' + event.target.id, {
       headers: {
-        'Authorization': 'Bearer ' + authToken
+        'Authorization': 'Bearer ' + accessToken
       }
     })
       .then(response => {

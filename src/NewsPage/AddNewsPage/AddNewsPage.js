@@ -7,24 +7,21 @@ import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor"
 import editorConfiguration from "../../CKEditorConf";
 
 import Save from "../../components/buttons/Save";
-import { axiosInstance as axios, authToken } from "../../axiosInstance";
+import { axiosInstance as axios, accessToken } from "../../axiosInstance";
 import { Context } from "../../stores/EditPostStore";
 
 const AddNewsPage = (props) => {
   const [state] = useContext(Context);
 
-  const initEditorMode = state.editorMode || 'create';
-  const [editorMode] = useState(initEditorMode);
-
   const [newsPost, setNewsPost] = useState('');
   const [redirectToNewsPage, setRedirectToNewsPage] = useState(false);
 
   const savePostHandler = () => {
-    if (editorMode === 'create') {
+    if (state.editorMode === 'create') {
       axios.post('/news/', {
         "postBody": newsPost,
         headers: {
-          'Authorization': 'Bearer ' + authToken
+          'Authorization': 'Bearer ' + accessToken
         }
       })
         .then(response => {
@@ -32,23 +29,24 @@ const AddNewsPage = (props) => {
           setRedirectToNewsPage(true)
         })
         .catch(error => console.log(error))
-    } else if (editorMode === 'edit') {
+    } else if (state.editorMode === 'edit') {
       axios.put('/news/' + state.editPostId, {
         "postBody": newsPost,
         headers: {
-          'Authorization': 'Bearer ' + authToken
+          'Authorization': 'Bearer ' + accessToken
         }
       })
         .then(response => {
           console.log(response);
-          setRedirectToNewsPage(true)
+          state.editorMode = 'create';
+          setRedirectToNewsPage(true);
         })
         .catch(error => console.log(error))
     }
   };
 
   useEffect(() =>{
-    if (editorMode === 'edit') {
+    if (state.editorMode === 'edit') {
       async function fetchData() {
         await axios.get('/news/' + state.editPostId)
           .then(response => {
@@ -59,7 +57,7 @@ const AddNewsPage = (props) => {
       }
       fetchData();
     }
-  }, [editorMode, state]);
+  }, [state]);
 
   if (redirectToNewsPage) {
     return <Redirect to={'/news/'}/>
