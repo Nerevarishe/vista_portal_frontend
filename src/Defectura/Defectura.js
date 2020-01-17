@@ -1,9 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Defectura extends Component {
-  render() {
-    return <div>Defectura</div>;
-  }
-}
+const Defectura = () => <div>Defectura</div>;
 
 export default Defectura;
