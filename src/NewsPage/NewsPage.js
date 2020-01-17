@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 import { Redirect } from "react-router";
 
-import { axiosInstance as axios } from "../axiosInstance";
+import {authToken, axiosInstance as axios} from "../axiosInstance";
 import moment from "moment";
 
 import AddNewsPostButton from "../components/buttons/AddNewsPostButton";
@@ -25,6 +25,7 @@ const NewsPage = () => {
   });
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
+  const [needFetchNews, setNeedFetchNews] = useState(false);
   const [redirectToAddNewsPage, setRedirectToAddNewsPage] = useState(false);
 
   useEffect(() =>{
@@ -37,13 +38,14 @@ const NewsPage = () => {
               postsPageHasPrev: response.data["postsPageHasPrev"]
             }
           );
+          setNeedFetchNews(false);
         })
         .catch(error => {
           console.log(error);
         });
     };
     fetchNews();
-  }, [page, perPage]);
+  }, [page, perPage, needFetchNews]);
 
   const editNewsHandler = (event) => {
     console.log(event.target.id);
@@ -53,6 +55,17 @@ const NewsPage = () => {
 
   const deleteNewsHandler = (event) => {
     console.log(event.target.id);
+    // TODO: Implement modal with delete confirmation
+    axios.delete('/news/' + event.target.id, {
+      headers: {
+        'Authorization': 'Bearer ' + authToken
+      }
+    })
+      .then(response => {
+        console.log(response);
+        setNeedFetchNews(true);
+      })
+      .catch(error => console.log(error))
   };
 
   const prevPageHandler = () => {
