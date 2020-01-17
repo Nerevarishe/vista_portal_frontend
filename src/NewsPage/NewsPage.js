@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Redirect } from "react-router";
 
@@ -14,96 +14,86 @@ import Delete from "../components/buttons/Delete";
 import classes from "./NewsPage.module.css";
 
 
-class NewsPage extends Component {
-  state = {
+const NewsPage = () => {
+  const [newsPostState, setNewsPostsState] = useState({
     news: [],
-    postsPageHasNext: null,
-    postsPageHasPrev: null,
-    page: 1,
-    per_page: 10,
-    redirect: false,
-    editedPostId: ''
-  };
+    postsPageHasNext: false,
+    postsPageHasPrev: false
+  });
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+  const [redirectToAddNewsPage, setRedirectToAddNewsPage] = useState(false);
+  const [editedPostId, setEditedPostId] = useState('');
 
-  componentDidMount() {
-    this.fetchNews();
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState.page !== this.state.page) {
-      this.fetchNews();
-    }
-  }
-
-  fetchNews = () => {
-    axios
-      .get("/news?page=" + this.state.page + "&per_page=" + this.state.per_page)
+  const fetchNews = async () => {
+    await axios.get("/news?page=" + page + "&per_page=" + perPage)
       .then(response => {
-        this.setState({
-          news: response.data["posts"],
-          postsPageHasNext: response.data["postsPageHasNext"],
-          postsPageHasPrev: response.data["postsPageHasPrev"]
-        });
+        setNewsPostsState({
+            news: response.data["posts"],
+            postsPageHasNext: response.data["postsPageHasNext"],
+            postsPageHasPrev: response.data["postsPageHasPrev"]
+          }
+        );
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  setRedirect = () => {
-    this.setState({redirect: true });
+  useEffect(() =>{
+    fetchNews();
+  }, [page]);
+
+  const editNewsHandler = (event) => {
+    console.log(event.target.id);
   };
 
-  editNewsHandler = (newsPostId) => {
-    this.setState({
-      editedPostId: newsPostId,
-      redirect: true
-    })
+  const deleteNewsHandler = (event) => {
+    console.log(event.target.id);
   };
 
-  deleteNewsHandler = () => {
-
+  const prevPageHandler = () => {
+    setPage(prevState => prevState - 1);
   };
 
-  prevButtonHandler = prevState => {
-    this.setState(prevState => ({ page: prevState.page - 1 }));
+  const nextPageHandler = () => {
+    setPage(prevState => prevState + 1);
   };
 
-  nextButtonHandler = prevState => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
+  const setRedirect = () => {
+    setRedirectToAddNewsPage(true)
   };
 
-  render() {
-    if (this.state.redirect) {
-      return <Redirect to="/news/add_news_post" />;
-    }
-    return (
+  if (redirectToAddNewsPage) {
+    return <Redirect to="/news/add_news_post"/>;
+  }
+
+  return (
       <div>
         <p>News Page</p>
-        <AddNewsPostButton btnClicked={this.setRedirect} />
-        {this.state.news.map(post => (
+        <AddNewsPostButton btnClicked={setRedirect} />
+        {newsPostState.news.map(post => (
           <div key={post["_id"]["$oid"]} className={classes.newsPostCard}>
             <p>
               {moment(post["date_created"]["$date"]).local().format("DD-MM-YYYY HH:mm")}
             </p>
             <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
             <div>
-              <Edit btnClicked={this.editNewsHandler.bind(post["_id"]["$oid"])} />
-              <Delete btnClicked={this.deleteNewsHandler}/>
+              <Edit id={post["_id"]["$oid"]} btnClicked={editNewsHandler.bind(this)} />
+              <Delete id={post["_id"]["$oid"]} btnClicked={deleteNewsHandler.bind(this)}/>
             </div>
           </div>
         ))}
         <PrevButton
-          btnClicked={this.prevButtonHandler}
-          isDisabled={this.state.postsPageHasNext}
+          btnClicked={prevPageHandler}
+          isDisabled={newsPostState["postsPageHasNext"]}
         />
         <NextButton
-          btnClicked={this.nextButtonHandler}
-          isDisabled={this.state.postsPageHasPrev}
+          btnClicked={nextPageHandler}
+          isDisabled={newsPostState["postsPageHasPrev"]}
         />
       </div>
-    );
-  }
-}
+  );
+};
 
 export default NewsPage;

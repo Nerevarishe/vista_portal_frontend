@@ -9,6 +9,9 @@ const NavigationBar = () => {
             <Link to="/news">Новости</Link>
           </li>
           <li>
+            <Link to="/login">Войти</Link>
+          </li>
+          <li>
             <Link to="/defectura">Дефектура</Link>
           </li>
           <li>

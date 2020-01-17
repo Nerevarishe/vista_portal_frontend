@@ -7,7 +7,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor"
 import editorConfiguration from "../../CKEditorConf";
 
 import Save from "../../components/buttons/Save";
-import {axiosInstance as axios} from "../../axiosInstance";
+import {axiosInstance as axios, authToken} from "../../axiosInstance";
 
 const AddNewsPage = (props) => {
 
@@ -16,7 +16,12 @@ const AddNewsPage = (props) => {
 
   const saveDataHandler = () => {
     setNewsPost(prevState =>
-      axios.post('/news/', {"postBody": newsPost})
+      axios.post('/news/', {
+        "postBody": newsPost,
+        headers: {
+          'Authorization': 'Bearer ' + authToken
+        }
+      })
         .then(response => {
           console.log(response);
           setRedirectToNewsPage(true)
