@@ -11,21 +11,24 @@ import LoginPage from "./LoginPage";
 import AddNewsPage from "./NewsPage/AddNewsPage";
 import Defectura from "./Defectura";
 import NotFound from "./NotFound";
+import Store from "./stores/EditPostStore";
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <NavigationBar />
-        <Switch>
-          <Route exact path="/" component={NewsPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/news" component={NewsPage} />
-          <Route exact path="/news/add_news_post" component={AddNewsPage} />
-          <Route exact path="/defectura" component={Defectura} />
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </Router>
+      <Store>
+        <Router>
+          <NavigationBar />
+          <Switch>
+            <Route exact path="/" component={NewsPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/news" component={NewsPage} />
+            <Route exact path="/news/add_news_post" component={AddNewsPage} />
+            <Route exact path="/defectura" component={Defectura} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </Router>
+      </Store>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { Redirect } from "react-router";
 
@@ -10,42 +10,45 @@ import NextButton from "../components/buttons/NextButton";
 import PrevButton from "../components/buttons/PrevButton";
 import Edit from "../components/buttons/Edit";
 import Delete from "../components/buttons/Delete";
+import { Context } from "../stores/EditPostStore";
 
 import classes from "./NewsPage.module.css";
 
 
 const NewsPage = () => {
+  const [state, dispatch] = useContext(Context);
+
   const [newsPostState, setNewsPostsState] = useState({
     news: [],
     postsPageHasNext: false,
     postsPageHasPrev: false
   });
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage] = useState(10);
   const [redirectToAddNewsPage, setRedirectToAddNewsPage] = useState(false);
-  const [editedPostId, setEditedPostId] = useState('');
-
-  const fetchNews = async () => {
-    await axios.get("/news?page=" + page + "&per_page=" + perPage)
-      .then(response => {
-        setNewsPostsState({
-            news: response.data["posts"],
-            postsPageHasNext: response.data["postsPageHasNext"],
-            postsPageHasPrev: response.data["postsPageHasPrev"]
-          }
-        );
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
 
   useEffect(() =>{
+    const fetchNews = async () => {
+      await axios.get("/news?page=" + page + "&per_page=" + perPage)
+        .then(response => {
+          setNewsPostsState({
+              news: response.data["posts"],
+              postsPageHasNext: response.data["postsPageHasNext"],
+              postsPageHasPrev: response.data["postsPageHasPrev"]
+            }
+          );
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    };
     fetchNews();
-  }, [page]);
+  }, [page, perPage]);
 
   const editNewsHandler = (event) => {
     console.log(event.target.id);
+    dispatch({type: 'EDIT_POST', data: event.target.id});
+    setRedirectToAddNewsPage(true)
   };
 
   const deleteNewsHandler = (event) => {

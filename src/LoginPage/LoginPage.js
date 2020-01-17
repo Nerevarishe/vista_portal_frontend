@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Redirect } from "react-router";
 
-import {axiosInstance as axios, userLogin} from "../axiosInstance";
+import { userLogin } from "../axiosInstance";
 import Button from "../components/buttons/Button";
 
 const LoginPage = () => {

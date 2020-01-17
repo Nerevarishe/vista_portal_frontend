@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { Redirect } from "react-router"
 
 import CKEditor from "@ckeditor/ckeditor5-react";
@@ -7,15 +7,20 @@ import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor"
 import editorConfiguration from "../../CKEditorConf";
 
 import Save from "../../components/buttons/Save";
-import {axiosInstance as axios, authToken} from "../../axiosInstance";
+import { axiosInstance as axios, authToken } from "../../axiosInstance";
+import { Context } from "../../stores/EditPostStore";
 
 const AddNewsPage = (props) => {
+  const [state] = useContext(Context);
+
+  const initEditorMode = state.editorMode || 'create';
+  const [editorMode] = useState(initEditorMode);
 
   const [newsPost, setNewsPost] = useState('');
   const [redirectToNewsPage, setRedirectToNewsPage] = useState(false);
 
-  const saveDataHandler = () => {
-    setNewsPost(prevState =>
+  const savePostHandler = () => {
+    if (editorMode === 'create') {
       axios.post('/news/', {
         "postBody": newsPost,
         headers: {
@@ -27,9 +32,34 @@ const AddNewsPage = (props) => {
           setRedirectToNewsPage(true)
         })
         .catch(error => console.log(error))
-    )
+    } else if (editorMode === 'edit') {
+      axios.put('/news/' + state.editPostId, {
+        "postBody": newsPost,
+        headers: {
+          'Authorization': 'Bearer ' + authToken
+        }
+      })
+        .then(response => {
+          console.log(response);
+          setRedirectToNewsPage(true)
+        })
+        .catch(error => console.log(error))
+    }
+  };
 
-    };
+  useEffect(() =>{
+    if (editorMode === 'edit') {
+      async function fetchData() {
+        await axios.get('/news/' + state.editPostId)
+          .then(response => {
+            console.log(response.data);
+            setNewsPost(response.data.post["post_body"]);
+          })
+          .catch(error => console.log(error))
+      }
+      fetchData();
+    }
+  }, [editorMode, state]);
 
   if (redirectToNewsPage) {
     return <Redirect to={'/news/'}/>
@@ -40,9 +70,9 @@ const AddNewsPage = (props) => {
       <CKEditor
         editor={ClassicEditor}
         config={editorConfiguration}
-        data={props.data}
+        data={newsPost}
         onInit={editor => {
-          editor.editing.view.focus()
+          editor.editing.view.focus();
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
@@ -50,7 +80,7 @@ const AddNewsPage = (props) => {
           setNewsPost(data)
         }}
       />
-      <Save btnClicked={saveDataHandler}/>
+      <Save btnClicked={savePostHandler}/>
     </div>
   );
 };
