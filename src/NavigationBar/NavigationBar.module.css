@@ -1,7 +1,16 @@
-ul li {
+ul, li {
     display: inline-block;
 }
 
 li {
     margin: 3px;
+}
+
+.nav-bar__nav-part {
+    width: 60%;
+}
+
+.nav-bar__user-part {
+    width: 33%;
+    text-align: right;
 }

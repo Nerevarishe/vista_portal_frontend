@@ -1,33 +1,12 @@
 import Dexie from 'dexie';
-import {refreshToken} from "./axiosInstance";
 
-const db = new Dexie('vistaPortal');
-
+const db = new Dexie("vistaDb");
 db.version(1).stores({
-  refreshTokenTable: 'id'
+  // refresh token have id 1, access token - 2
+  tokensTable: "id"
 });
 
-const saveRefreshToken = async (refreshToken) => {
-  await db.refreshTokenTable.put({id: 1, refreshToken: refreshToken});
-};
+const REFRESH_TOKEN = 1;
+const ACCESS_TOKEN = 2;
 
-const loadRefreshToken = async () => {
-  const data = await db.refreshTokenTable
-    .where('id')
-    .equals(1)
-    .toArray()
-    .then(data => {
-      console.log(data[0]['refreshToken']);
-      return Promise.resolve();
-    });
-
-};
-
-const deleteRefreshToken = async () => {
-  await db.refreshTokenTable
-    .where('id')
-    .equals(1)
-    .delete();
-};
-
-export { saveRefreshToken, loadRefreshToken, deleteRefreshToken }
+export { db, REFRESH_TOKEN, ACCESS_TOKEN }

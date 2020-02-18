@@ -1,14 +1,14 @@
 import React, {createContext, useReducer} from "react";
-import EditPostReducer from '../reducers/EditPostReducer'
+import AuthReducer from '../reducers/AuthReducer'
 
 
 const initialState = {
-  editPostId: '',
-  editorMode: 'create'
+  username: "",
+  isLoggedIn: false
 };
 
-const EditPostStore = ({children}) => {
-  const [state, dispatch] = useReducer(EditPostReducer, initialState);
+const AuthStore = ({children}) => {
+  const [state, dispatch] = useReducer(AuthReducer, initialState);
   return (
     <Context.Provider value={[state, dispatch]}>
       {children}
@@ -17,4 +17,4 @@ const EditPostStore = ({children}) => {
 };
 
 export const Context = createContext(initialState);
-export default EditPostStore;
+export default AuthStore;

@@ -7,8 +7,9 @@ import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor"
 import editorConfiguration from "../../CKEditorConf";
 
 import Save from "../../components/buttons/Save";
-import { axiosInstance as axios, accessToken } from "../../axiosInstance";
 import { Context } from "../../stores/EditPostStore";
+
+import { savePost, fetchData } from "./utils";
 
 const AddNewsPage = (props) => {
   const [state] = useContext(Context);
@@ -17,46 +18,11 @@ const AddNewsPage = (props) => {
   const [redirectToNewsPage, setRedirectToNewsPage] = useState(false);
 
   const savePostHandler = () => {
-    if (state.editorMode === 'create') {
-      axios.post('/news/', {
-        "postBody": newsPost,
-        headers: {
-          'Authorization': 'Bearer ' + accessToken
-        }
-      })
-        .then(response => {
-          console.log(response);
-          setRedirectToNewsPage(true)
-        })
-        .catch(error => console.log(error))
-    } else if (state.editorMode === 'edit') {
-      axios.put('/news/' + state.editPostId, {
-        "postBody": newsPost,
-        headers: {
-          'Authorization': 'Bearer ' + accessToken
-        }
-      })
-        .then(response => {
-          console.log(response);
-          state.editorMode = 'create';
-          setRedirectToNewsPage(true);
-        })
-        .catch(error => console.log(error))
-    }
+    savePost(state, newsPost, setRedirectToNewsPage);
   };
 
   useEffect(() =>{
-    if (state.editorMode === 'edit') {
-      async function fetchData() {
-        await axios.get('/news/' + state.editPostId)
-          .then(response => {
-            console.log(response.data);
-            setNewsPost(response.data.post["post_body"]);
-          })
-          .catch(error => console.log(error))
-      }
-      fetchData();
-    }
+    fetchData(state, setNewsPost);
   }, [state]);
 
   if (redirectToNewsPage) {
@@ -74,7 +40,7 @@ const AddNewsPage = (props) => {
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
-          console.log({event, editor, data});
+          // console.log({event, editor, data});
           setNewsPost(data)
         }}
       />
