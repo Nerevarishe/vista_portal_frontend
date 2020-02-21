@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from "react";
-import { Redirect } from "react-router"
+import { history } from "../../App"
 
 import CKEditor from "@ckeditor/ckeditor5-react";
 
@@ -11,23 +11,24 @@ import { Context } from "../../stores/EditPostStore";
 
 import { savePost, fetchData } from "./utils";
 
-const AddNewsPage = (props) => {
+const AddNewsPage = () => {
   const [state] = useContext(Context);
 
   const [newsPost, setNewsPost] = useState('');
-  const [redirectToNewsPage, setRedirectToNewsPage] = useState(false);
-
-  const savePostHandler = () => {
-    savePost(state, newsPost, setRedirectToNewsPage);
-  };
 
   useEffect(() =>{
     fetchData(state, setNewsPost);
   }, [state]);
 
-  if (redirectToNewsPage) {
-    return <Redirect to={'/news/'}/>
-  }
+  const savePostHandler = () => {
+    savePost(state, newsPost)
+      .then(() => {
+        console.log("Redirect from save post");
+        history.push("/news");
+      })
+      .catch();
+  };
+
   return (
     <div>
       <p>Add News Page</p>

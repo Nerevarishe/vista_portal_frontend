@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../stores/EditPostStore";
-import { Redirect } from "react-router";
+import { history } from "../App";
 import { fetchNews, deleteNewsPost } from "./utils";
 
 import moment from "moment";
@@ -24,7 +24,6 @@ const NewsPage = () => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [needFetchNews, setNeedFetchNews] = useState(false);
-  const [redirectToAddNewsPage, setRedirectToAddNewsPage] = useState(false);
 
   useEffect( () =>{
     const fetchData = async () => {
@@ -35,7 +34,8 @@ const NewsPage = () => {
 
   const editNewsHandler = (event) => {
     dispatch({type: 'EDIT_POST', data: event.target.id});
-    setRedirectToAddNewsPage(true)
+    // TODO: Make redirect to add news page
+    history.push("/news/add_news_post");
   };
 
   const deleteNewsHandler = (event) => {
@@ -51,18 +51,14 @@ const NewsPage = () => {
     setPage(prevState => prevState + 1);
   };
 
-  const setRedirect = () => {
-    setRedirectToAddNewsPage(true)
+  const redirectToAddNewsPage = () => {
+    history.push("/news/add_news_post");
   };
-
-  if (redirectToAddNewsPage) {
-    return <Redirect to="/news/add_news_post"/>;
-  }
 
   return (
       <div>
         <p>News Page</p>
-        <AddNewsPostButton btnClicked={setRedirect} />
+        <AddNewsPostButton btnClicked={redirectToAddNewsPage} />
         {newsPostState.news.map(post => (
           <div key={post["_id"]["$oid"]} className={classes.newsPostCard}>
             <p>

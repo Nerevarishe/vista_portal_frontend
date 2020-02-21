@@ -1,6 +1,7 @@
 import React from "react";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import "./App.css";
 
@@ -15,12 +16,14 @@ import EditPostStore from "./stores/EditPostStore";
 import AuthStore from "./stores/AuthStore";
 import Logout from "./LoginPage/Logout";
 
+const history = createBrowserHistory();
+
 function App() {
   return (
     <div className="App">
       <AuthStore>
         <EditPostStore>
-          <Router>
+          <Router history={history}>
             <NavigationBar />
             <Switch>
               <Route exact path="/" component={NewsPage} />
@@ -39,3 +42,4 @@ function App() {
 }
 
 export default App;
+export { history };

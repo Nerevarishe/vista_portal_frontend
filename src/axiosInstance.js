@@ -1,8 +1,7 @@
 // Axios instances and interceptors configuration, configuring refresh token ability
-import React from "react";
-import { Redirect } from "react-router";
 import axios from "axios";
-import { loadRefreshToken, saveRefreshToken, loadAccessToken, saveAccessToken } from "./LoginPage/utils"
+import { loadRefreshToken, saveRefreshToken, saveAccessToken } from "./LoginPage/utils";
+import { history } from "./App";
 
 const axiosBaseConfig = {
   baseURL: "http://localhost:5000"
@@ -32,8 +31,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     // Get original request config
     let originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+    if (error.response.status === 401 && originalRequest.url !== `${originalRequest.baseURL}/auth/refresh`) {
       const refreshToken = await loadRefreshToken();
       const data = {};
       const conf = {
@@ -48,7 +46,12 @@ axiosInstance.interceptors.response.use(
           originalRequest.headers["Authorization"] = `Bearer ${response.data["access_token"]}`;
           return axiosInstance(originalRequest)
         })
-        .catch(console.log)
+        .catch(() => {
+          // Redirect to login page
+          console.log("Can't refresh tokens.\nNeed Redirect to login page");
+          history.push("/logout");
+          history.push("/login");
+        })
     }
     return Promise.reject(error)
   }

@@ -1,14 +1,17 @@
 import React, { useContext } from "react";
 import { Context } from "../../stores/AuthStore";
 import { logoutUser } from "../utils"
-import { Redirect } from "react-router";
+import { history } from "../../App";
 
 const Logout = () => {
   const [state, dispatch] = useContext(Context);
   logoutUser()
-    .then(dispatch({type: "LOGOUT_USER"}))
+    .then(() => {
+      dispatch({type: "LOGOUT_USER"});
+      // history.push("/");
+    })
     .catch(console.log);
-  return <Redirect to={"/"} />
+  return null
 };
 
 export default Logout
