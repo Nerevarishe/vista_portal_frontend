@@ -1,16 +1,16 @@
 import React, {useState, useContext, useEffect} from "react";
-import { history } from "../../App";
+import { history } from "../../../App";
 
 import CKEditor from "@ckeditor/ckeditor5-react";
 
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import editorConfiguration from "../../CKEditorConf";
+import editorConfiguration from "../../../configs/CKEditorConf";
 
-import { Context } from "../../stores/store";
+import { Context } from "../../../stores/store";
 
 import { savePost, fetchData } from "./utils";
-import Button from "../../components/Button";
-import PrivateRoute from "../../PrivateRoute";
+import Button from "../../../components/Button";
+import PrivateRoute from "../../../Auth/PrivateRoute";
 
 const AddNewsPage = () => {
   const [state, dispatch] = useContext(Context);

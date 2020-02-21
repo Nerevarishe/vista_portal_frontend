@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Context } from "../stores/store";
+import { Context } from "../../stores/store";
 import { Link } from "react-router-dom";
 import classes from "./NavigationBar.module.css";
 

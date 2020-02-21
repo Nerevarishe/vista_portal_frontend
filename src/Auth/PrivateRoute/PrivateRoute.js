@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Context } from "../stores/store";
-import { history } from "../App";
+import { Context } from "../../stores/store";
+import { history } from "../../App";
 
 const PrivateRoute = (props) => {
   const [state, dispatch] = useContext(Context);

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../stores/store";
+import { Context } from "../../stores/store";
 
-import { history } from "../App";
+import { history } from "../../App";
 
-import { loginUser } from "./utils";
-import Button from "../components/Button";
+import { loginUser } from "../../Auth/utils";
+import Button from "../../components/Button";
 
 const LoginPage = () => {
   const [state, dispatch] = useContext(Context);

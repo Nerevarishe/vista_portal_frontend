@@ -1,4 +1,4 @@
-import { axiosInstance as axios } from "../axiosInstance";
+import { axiosInstance as axios } from "../../configs/axiosInstance";
 
 const fetchNews = async (page, perPage, setNewsPostsState, setNeedFetchNews) => {
   await axios.get("/news/?page=" + page + "&per_page=" + perPage)

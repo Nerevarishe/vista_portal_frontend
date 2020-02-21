@@ -1,5 +1,5 @@
-import { axiosInstance as axios, axiosWithoutInterceptors } from "../axiosInstance";
-import { db, REFRESH_TOKEN, ACCESS_TOKEN } from "../dexieConfig"
+import { axiosInstance as axios, axiosWithoutInterceptors } from "../configs/axiosInstance";
+import { db, REFRESH_TOKEN, ACCESS_TOKEN } from "../configs/dexieConfig"
 
 const saveRefreshToken = async (refreshToken) => {
   await db.tokensTable.put({id: 1, refreshToken: refreshToken})

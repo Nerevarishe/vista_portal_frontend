@@ -1,7 +1,7 @@
 // Axios instances and interceptors configuration, configuring refresh token ability
 import axios from "axios";
-import { loadRefreshToken, saveRefreshToken, saveAccessToken } from "./LoginPage/utils";
-import { history } from "./App";
+import { loadRefreshToken, saveRefreshToken, saveAccessToken } from "../Auth/utils";
+import { history } from "../App";
 
 const axiosBaseConfig = {
   baseURL: "http://localhost:5000"

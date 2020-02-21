@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../stores/store";
-import { history } from "../App";
+import { Context } from "../../stores/store";
+import { history } from "../../App";
 import { fetchNews, deleteNewsPost } from "./utils";
 
 import moment from "moment";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 
 import classes from "./NewsPage.module.css";
 

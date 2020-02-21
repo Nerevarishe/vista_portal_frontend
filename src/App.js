@@ -5,14 +5,14 @@ import { createBrowserHistory } from "history";
 
 import "./App.css";
 
-import NavigationBar from "./NavigationBar";
+import NavigationBar from "./components/NavigationBar";
 
-import NewsPage from "./NewsPage/NewsPage";
-import LoginPage from "./LoginPage";
-import Logout from "./LoginPage/Logout";
-import AddNewsPage from "./NewsPage/AddNewsPage";
-import Defectura from "./Defectura";
-import NotFound from "./NotFound";
+import NewsPage from "./containers/NewsPage/NewsPage";
+import LoginPage from "./containers/LoginPage";
+import Logout from "./Auth/Logout";
+import AddNewsPage from "./containers/NewsPage/AddNewsPage";
+import DefecturaPage from "./containers/DefecturaPage";
+import NotFoundPage from "./containers/NotFoundPage";
 
 import Store from "./stores/store";
 
@@ -30,8 +30,8 @@ function App() {
               <Route exact path="/logout" component={Logout} />
               <Route exact path="/news" component={NewsPage} />
               <Route exact path="/news/add_news_post" component={AddNewsPage} />
-              <Route exact path="/defectura" component={Defectura} />
-              <Route path="*" component={NotFound} />
+              <Route exact path="/defectura" component={DefecturaPage} />
+              <Route path="*" component={NotFoundPage} />
             </Switch>
           </Router>
       </Store>
