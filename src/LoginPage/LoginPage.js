@@ -4,7 +4,7 @@ import { Context } from "../stores/AuthStore";
 import { history } from "../App";
 
 import { loginUser } from "./utils";
-import Button from "../components/buttons/Button";
+import Button from "../components/Button";
 
 const LoginPage = () => {
   const [state, dispatch] = useContext(Context);

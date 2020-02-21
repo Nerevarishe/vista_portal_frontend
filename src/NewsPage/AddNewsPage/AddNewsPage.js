@@ -6,10 +6,11 @@ import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import editorConfiguration from "../../CKEditorConf";
 
-import Save from "../../components/buttons/Save";
 import { Context } from "../../stores/EditPostStore";
 
 import { savePost, fetchData } from "./utils";
+import Button from "../../components/Button";
+import PrivateRoute from "../../PrivateRoute";
 
 const AddNewsPage = () => {
   const [state] = useContext(Context);
@@ -30,7 +31,7 @@ const AddNewsPage = () => {
   };
 
   return (
-    <div>
+    <PrivateRoute>
       <p>Add News Page</p>
       <CKEditor
         editor={ClassicEditor}
@@ -45,8 +46,8 @@ const AddNewsPage = () => {
           setNewsPost(data)
         }}
       />
-      <Save btnClicked={savePostHandler}/>
-    </div>
+      <Button clicked={savePostHandler} text="Save"/>
+    </PrivateRoute>
   );
 };
 

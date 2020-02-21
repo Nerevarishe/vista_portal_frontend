@@ -10,22 +10,6 @@ const axiosBaseConfig = {
 // Base axios instance
 const axiosInstance = axios.create(axiosBaseConfig);
 
-// Base axios instance without interceptors
-const axiosWithoutInterceptors = axios.create(axiosBaseConfig);
-
-// Interceptors for base axios instance
-// axiosInstance.interceptors.request.use(
-//   async config => {
-//     // Send auth token in all requests by default
-//     const accessToken = await loadAccessToken();
-//     if (accessToken) {
-//       config.headers['Authorization'] = `Bearer ${accessToken["accessToken"]}`;
-//     }
-//     return Promise.resolve(config)
-//   },
-//   error => Promise.reject(error)
-// );
-
 axiosInstance.interceptors.response.use(
   response => response,
   async (error) => {
@@ -57,4 +41,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export { axiosInstance, axiosWithoutInterceptors }
+export { axiosInstance }

@@ -4,11 +4,7 @@ import { history } from "../App";
 import { fetchNews, deleteNewsPost } from "./utils";
 
 import moment from "moment";
-import AddNewsPostButton from "../components/buttons/AddNewsPostButton";
-import NextButton from "../components/buttons/NextButton";
-import PrevButton from "../components/buttons/PrevButton";
-import Edit from "../components/buttons/Edit";
-import Delete from "../components/buttons/Delete";
+import Button from "../components/Button";
 
 import classes from "./NewsPage.module.css";
 
@@ -58,7 +54,7 @@ const NewsPage = () => {
   return (
       <div>
         <p>News Page</p>
-        <AddNewsPostButton btnClicked={redirectToAddNewsPage} />
+        <Button clicked={redirectToAddNewsPage} text="Add News Button" />
         {newsPostState.news.map(post => (
           <div key={post["_id"]["$oid"]} className={classes.newsPostCard}>
             <p>
@@ -66,18 +62,20 @@ const NewsPage = () => {
             </p>
             <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
             <div>
-              <Edit id={post["_id"]["$oid"]} btnClicked={editNewsHandler.bind(this)} />
-              <Delete id={post["_id"]["$oid"]} btnClicked={deleteNewsHandler.bind(this)}/>
+              <Button id={post["_id"]["$oid"]} clicked={editNewsHandler.bind(this)} text="Edit" />
+              <Button id={post["_id"]["$oid"]} clicked={deleteNewsHandler.bind(this)} text="Delete" />
             </div>
           </div>
         ))}
-        <PrevButton
-          btnClicked={prevPageHandler}
+        <Button
+          clicked={prevPageHandler}
           isDisabled={newsPostState["postsPageHasNext"]}
+          text="Prev Page"
         />
-        <NextButton
-          btnClicked={nextPageHandler}
+        <Button
+          clicked={nextPageHandler}
           isDisabled={newsPostState["postsPageHasPrev"]}
+          text="Next Page"
         />
       </div>
   );
