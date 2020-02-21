@@ -1,6 +1,5 @@
 import { axiosInstance as axios } from "../../axiosInstance";
 import { loadAccessToken } from "../../LoginPage/utils";
-import { history } from "../../App";
 
 const savePost = async (state, newsPost) => {
   const accessToken = await loadAccessToken();
@@ -12,32 +11,18 @@ const savePost = async (state, newsPost) => {
       "Authorization": `Bearer ${accessToken["accessToken"]}`
     }
   };
-  if (state.editorMode === 'create') {
+  if (state.newsPosts["editorMode"] === 'create') {
     axios.post('/news/', data, conf)
-      .then(() => {
-        // history.push('/news');
-      })
+      .then()
       .catch()
-  } else if (state.editorMode === 'edit') {
+  } else if (state.newsPosts["editorMode"] === 'edit') {
     axios.put(`/news/${state.editPostId}`, data, conf)
       .then(() => {
-        state.editorMode = 'create';
+        state.newsPosts["editorMode"] = 'create';
       })
       .catch()
   }
 };
-
-// const fetchData = (state, setNewsPost) => {
-//   if (state.editorMode === 'edit') {
-//     async function fetchData() {
-//       await axios.get('/news/' + state.editPostId)
-//         .then(response => {
-//           console.log(response.data);
-//           setNewsPost(response.data.post["post_body"]);
-//         })
-//         .catch(error => console.log(error))
-//     }}
-// };
 
 const fetchData = async (state, setNewsPost) => {
   if (state.editorMode === 'edit') {

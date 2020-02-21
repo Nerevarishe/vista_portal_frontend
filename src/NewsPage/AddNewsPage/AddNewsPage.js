@@ -1,20 +1,19 @@
 import React, {useState, useContext, useEffect} from "react";
-import { history } from "../../App"
+import { history } from "../../App";
 
 import CKEditor from "@ckeditor/ckeditor5-react";
 
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import editorConfiguration from "../../CKEditorConf";
 
-import { Context } from "../../stores/EditPostStore";
+import { Context } from "../../stores/store";
 
 import { savePost, fetchData } from "./utils";
 import Button from "../../components/Button";
 import PrivateRoute from "../../PrivateRoute";
 
 const AddNewsPage = () => {
-  const [state] = useContext(Context);
-
+  const [state, dispatch] = useContext(Context);
   const [newsPost, setNewsPost] = useState('');
 
   useEffect(() =>{
@@ -24,10 +23,10 @@ const AddNewsPage = () => {
   const savePostHandler = () => {
     savePost(state, newsPost)
       .then(() => {
-        console.log("Redirect from save post");
         history.push("/news");
       })
-      .catch();
+      .catch(() => {
+      });
   };
 
   return (

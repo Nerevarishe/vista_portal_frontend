@@ -9,20 +9,19 @@ import NavigationBar from "./NavigationBar";
 
 import NewsPage from "./NewsPage/NewsPage";
 import LoginPage from "./LoginPage";
+import Logout from "./LoginPage/Logout";
 import AddNewsPage from "./NewsPage/AddNewsPage";
 import Defectura from "./Defectura";
 import NotFound from "./NotFound";
-import EditPostStore from "./stores/EditPostStore";
-import AuthStore from "./stores/AuthStore";
-import Logout from "./LoginPage/Logout";
+
+import Store from "./stores/store";
 
 const history = createBrowserHistory();
 
 function App() {
   return (
     <div className="App">
-      <AuthStore>
-        <EditPostStore>
+      <Store>
           <Router history={history}>
             <NavigationBar />
             <Switch>
@@ -35,8 +34,7 @@ function App() {
               <Route path="*" component={NotFound} />
             </Switch>
           </Router>
-        </EditPostStore>
-      </AuthStore>
+      </Store>
     </div>
   );
 }

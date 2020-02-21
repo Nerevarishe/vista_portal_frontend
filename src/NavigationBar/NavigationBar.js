@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Context } from "../stores/AuthStore";
+import { Context } from "../stores/store";
 import { Link } from "react-router-dom";
 import classes from "./NavigationBar.module.css";
 
 const NavigationBar = () => {
   const [state, dispatch] = useContext(Context);
-  const username = state.username || null;
+  const username = state.auth["username"];
   let navBarUser = <Link to="/login">Войти</Link>;
   if (username) {
     navBarUser = <React.Fragment>

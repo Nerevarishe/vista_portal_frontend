@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../stores/AuthStore";
+import { Context } from "../stores/store";
 
 import { history } from "../App";
 

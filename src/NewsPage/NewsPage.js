@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../stores/EditPostStore";
+import { Context } from "../stores/store";
 import { history } from "../App";
 import { fetchNews, deleteNewsPost } from "./utils";
 
