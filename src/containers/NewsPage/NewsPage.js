@@ -41,10 +41,20 @@ const NewsPage = (props) => {
   };
 
   const prevPageHandler = () => {
+    setNewsPostsState({
+      news: [...newsPostState["news"]],
+      postsPageHasNext: false,
+      postsPageHasPrev: false
+    });
     setPage(prevState => prevState - 1);
   };
 
   const nextPageHandler = () => {
+    setNewsPostsState({
+      news: [...newsPostState["news"]],
+      postsPageHasNext: false,
+      postsPageHasPrev: false
+    });
     setPage(prevState => prevState + 1);
   };
 
@@ -53,7 +63,7 @@ const NewsPage = (props) => {
   };
 
   return (
-      <div>
+      <React.Fragment>
         <p>News Page</p>
         <Button clicked={redirectToAddNewsPage} text="Add News Button" />
         {newsPostState.news.map(post => (
@@ -70,15 +80,15 @@ const NewsPage = (props) => {
         ))}
         <Button
           clicked={prevPageHandler}
-          isDisabled={newsPostState["postsPageHasNext"]}
+          btnDisabled={!newsPostState["postsPageHasPrev"]}
           text="Prev Page"
         />
         <Button
           clicked={nextPageHandler}
-          isDisabled={newsPostState["postsPageHasPrev"]}
+          btnDisabled={!newsPostState["postsPageHasNext"]}
           text="Next Page"
         />
-      </div>
+      </React.Fragment>
   );
 };
 
