@@ -1,5 +1,9 @@
+nav {
+    margin: 10px 0px 20px 0px;
+}
+
 ul, li {
-    display: inline-block;
+    display: inline;
 }
 
 li {
@@ -7,10 +11,28 @@ li {
 }
 
 .nav-bar__nav-part {
-    width: 60%;
+    width: 66%;
 }
 
 .nav-bar__user-part {
     width: 33%;
     text-align: right;
+}
+
+.nav-bar__nav-part a:link,
+.nav-bar__nav-part a:visited,
+.nav-bar__user-part a:link,
+.nav-bar__user-part a:visited {
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px black solid;
+}
+
+.nav-bar__nav-part a:hover,
+.nav-bar__nav-part a:active,
+.nav-bar__user-part a:hover,
+.nav-bar__user-part a:active {
+    color: red;
+    text-decoration: none;
+    border-bottom: 1px red solid;
 }

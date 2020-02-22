@@ -17,3 +17,9 @@
     color: white;
     border: 1px solid red;
 }
+
+.disabled {
+    background-color: grey;
+    color: darkgray;
+    border: 1px solid grey;
+}
