@@ -36,11 +36,11 @@ const loginUser = async (username, password) => {
     "password": password
   };
   const response = await axios.post('/auth/login', data);
+  // TODO: Implement checkin response from server for errors 400 401 404
   const accessToken = response.data["access_token"];
   const refreshToken = response.data["refresh_token"];
   await saveAccessToken(accessToken);
   await saveRefreshToken(refreshToken);
-
 };
 
 const logoutUser = async () => {

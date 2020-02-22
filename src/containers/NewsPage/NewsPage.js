@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useMemo} from "react";
 import { Context } from "../../stores/store";
 import { history } from "../../App";
 import { fetchNews, deleteNewsPost } from "./utils";
@@ -9,7 +9,7 @@ import Button from "../../components/Button";
 import classes from "./NewsPage.module.css";
 
 
-const NewsPage = () => {
+const NewsPage = (props) => {
   const [state, dispatch] = useContext(Context);
 
   const [newsPostState, setNewsPostsState] = useState({
@@ -25,12 +25,13 @@ const NewsPage = () => {
     const fetchData = async () => {
       await fetchNews(page, perPage, setNewsPostsState, setNeedFetchNews);
     };
-    fetchData().then().catch();
+    fetchData()
+      .then()
+      .catch();
   }, [page, perPage, needFetchNews]);
 
   const editNewsHandler = (event) => {
     dispatch({type: 'EDIT_POST', data: event.target.id});
-    // TODO: Make redirect to add news page
     history.push("/news/add_news_post");
   };
 

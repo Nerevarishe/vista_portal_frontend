@@ -15,7 +15,7 @@ const NavigationBar = () => {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <nav>
         <ul className={classes["nav-bar__nav-part"]}>
           <li>
@@ -32,7 +32,7 @@ const NavigationBar = () => {
           {navBarUser}
         </ul>
       </nav>
-    </div>
+    </React.Fragment>
   );
 };
 
