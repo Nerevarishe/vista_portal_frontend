@@ -16,6 +16,7 @@ import DefecturaPage from "./containers/DefecturaPage";
 
 import NotFoundPage from "./containers/NotFoundPage";
 import Store from "./stores/store";
+import TryLoginAfterIndexPageFirstLoad from "./Auth/TryLoginAfterIndexPageFirstLoad";
 
 const history = createBrowserHistory();
 
@@ -25,6 +26,7 @@ function App() {
       <Store>
           <Router history={history}>
             <NavigationBar />
+            <TryLoginAfterIndexPageFirstLoad />
             <Switch>
               <Route exact path="/" component={NewsPage} />
               <Route exact path="/login" component={LoginPage} />
