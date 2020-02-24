@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useMemo} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../stores/store";
 import { history } from "../../App";
 import { fetchNews, deleteNewsPost } from "./utils";
@@ -9,7 +9,7 @@ import Button from "../../components/Button";
 import classes from "./NewsPage.module.css";
 
 
-const NewsPage = (props) => {
+const NewsPage = () => {
   const [state, dispatch] = useContext(Context);
 
   const [newsPostState, setNewsPostsState] = useState({
@@ -22,12 +22,9 @@ const NewsPage = (props) => {
   const [needFetchNews, setNeedFetchNews] = useState(false);
 
   useEffect( () =>{
-    const fetchData = async () => {
-      await fetchNews(page, perPage, setNewsPostsState, setNeedFetchNews);
-    };
-    fetchData()
+    fetchNews(page, perPage, setNewsPostsState, setNeedFetchNews)
       .then()
-      .catch();
+      .catch()
   }, [page, perPage, needFetchNews]);
 
   const editNewsHandler = (event) => {
@@ -37,7 +34,11 @@ const NewsPage = (props) => {
 
   const deleteNewsHandler = (event) => {
     // TODO: Implement modal with delete confirmation
-    deleteNewsPost(event, setNeedFetchNews);
+    event.persist();
+    // dispatch({type: 'DELETE_POST', data: event.target.id});
+    deleteNewsPost(event, setNeedFetchNews)
+      .then()
+      .catch();
   };
 
   const prevPageHandler = () => {
@@ -78,6 +79,7 @@ const NewsPage = (props) => {
             </div>
           </div>
         ))}
+        <br/>
         <Button
           clicked={prevPageHandler}
           btnDisabled={!newsPostState["postsPageHasPrev"]}

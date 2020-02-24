@@ -17,7 +17,9 @@ const AddNewsPage = () => {
   const [newsPost, setNewsPost] = useState('');
 
   useEffect(() =>{
-    fetchData(state, setNewsPost);
+    fetchData(state, setNewsPost)
+      .then()
+      .catch();
   }, [state]);
 
   const savePostHandler = () => {

@@ -27,6 +27,14 @@ const Reducer = (state, action) => {
           editorMode: 'edit'
         }
       };
+    case 'DELETE_POST':
+      return {
+        ...state,
+        newsPosts: {
+          editPostId: action.data,
+          editorMode: 'create'
+        }
+      };
 
     default:
       return state;

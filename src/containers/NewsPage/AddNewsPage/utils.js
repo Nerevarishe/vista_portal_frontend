@@ -16,7 +16,7 @@ const savePost = async (state, newsPost) => {
       .then()
       .catch()
   } else if (state.newsPosts["editorMode"] === 'edit') {
-    axios.put(`/news/${state.editPostId}`, data, conf)
+    axios.put(`/news/${state.newsPosts["editPostId"]}`, data, conf)
       .then(() => {
         state.newsPosts["editorMode"] = 'create';
       })
@@ -25,8 +25,8 @@ const savePost = async (state, newsPost) => {
 };
 
 const fetchData = async (state, setNewsPost) => {
-  if (state.editorMode === 'edit') {
-    await axios.get('/news/' + state.editPostId)
+  if (state.newsPosts["editorMode"] === 'edit') {
+    await axios.get('/news/' + state.newsPosts["editPostId"])
       .then(response => {
         setNewsPost(response.data.post["post_body"]);
       })
