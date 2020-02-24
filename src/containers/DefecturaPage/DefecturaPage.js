@@ -1,5 +1,11 @@
 import React from "react";
+import Backdrop from "../../components/Backdrop";
 
-const DefecturaPage = () => <div>Defectura</div>;
+const DefecturaPage = () => (
+  <div>
+    <Backdrop showBackdrop={false}/>
+    <p>Defectura</p>
+  </div>
+);
 
 export default DefecturaPage;
