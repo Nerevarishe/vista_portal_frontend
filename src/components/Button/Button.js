@@ -3,6 +3,9 @@ import classes from "./Button.module.css"
 
 const Button = props => {
   let style = [classes["basicButton"]];
+  if (props.style) {
+    style.push(props.style)
+  }
   if (props.btnDisabled) {
     style = [classes["disabled"]]
   }

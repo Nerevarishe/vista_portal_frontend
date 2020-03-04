@@ -33,12 +33,22 @@ const NewsPage = () => {
   };
 
   const deleteNewsHandler = (event) => {
-    // TODO: Implement modal with delete confirmation
     event.persist();
-    // dispatch({type: 'DELETE_POST', data: event.target.id});
-    deleteNewsPost(event, setNeedFetchNews)
-      .then()
-      .catch();
+    dispatch({type: 'DELETE_NEWS_POST_MODAL', data: [
+        event.target.id,
+        () => {
+          deleteNewsPost(event, setNeedFetchNews)
+            .then(
+              () => {
+                dispatch({type: "RESET_MODAL"});
+              }
+            )
+            .catch();
+        },
+        () => {
+          dispatch({type: "RESET_MODAL"})
+        }
+      ]});
   };
 
   const prevPageHandler = () => {

@@ -36,6 +36,37 @@ const Reducer = (state, action) => {
         }
       };
 
+    // Modal cases
+    case "DELETE_NEWS_POST_MODAL":
+      // Data items:
+      // 0 - id of post,
+      // 1 - function that handling deletion,
+      // 2 - function that reset modal state and close it
+      return {
+        ...state,
+        modal: {
+          showModal: true,
+          data: action.data[0],
+          content: "Delete news post?",
+          buttons: "YN",
+          handlers: {
+            btnYesHandler: action.data[1],
+            btnNoHandler: action.data[2]
+          }
+        }
+      };
+    case "RESET_MODAL":
+      return {
+        ...state,
+        modal: {
+          showModal: false,
+          data: null,
+          content: null,
+          buttons: null,
+          handlers: null
+        }
+      };
+
     default:
       return state;
   }

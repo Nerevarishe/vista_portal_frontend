@@ -10,6 +10,13 @@ const initialState = {
   newsPosts: {
     editPostId: "",
     editorMode: "create"
+  },
+  modal: {
+    showModal: false,
+    data: null,
+    content: null,
+    buttons: null,
+    handlers: null
   }
 };
 
