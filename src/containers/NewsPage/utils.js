@@ -1,32 +1,18 @@
 import { axiosInstance as axios } from "../../configs/axiosInstance";
 import { loadAccessToken } from "../../Auth/utils";
 
-const fetchNews = async (page, perPage, setNewsPostsState, setNeedFetchNews) => {
-  await axios.get("/news/?page=" + page + "&per_page=" + perPage)
-    .then(response => {
-      setNewsPostsState({
-          news: response.data["posts"],
-          postsPageHasNext: response.data["postsPageHasNext"],
-          postsPageHasPrev: response.data["postsPageHasPrev"]
-        }
-      );
-      setNeedFetchNews(false);
-    })
-    .catch();
+const fetchNews = async (page, perPage) => {
+  return await axios.get(`/news/?page=${page}&per_page=${perPage}`)
 };
 
-const deleteNewsPost = async (event, setNeedFetchNews) => {
+const deleteNewsPost = async (event) => {
   const accessToken = await loadAccessToken();
   const conf = {
     headers: {
       "Authorization": `Bearer ${accessToken["accessToken"]}`
     }
   };
-  axios.delete(`/news/${event.target["id"]}`, conf)
-    .then(() => {
-      setNeedFetchNews(true);
-    })
-    .catch()
+  return await axios.delete(`/news/${event.target["id"]}`, conf)
 };
 
 export { fetchNews, deleteNewsPost }
