@@ -12,26 +12,16 @@ const savePost = async (state, newsPost) => {
     }
   };
   if (state.newsPosts["editorMode"] === 'create') {
-    axios.post('/news/', data, conf)
-      .then()
-      .catch()
+    return await axios.post('/news/', data, conf)
   } else if (state.newsPosts["editorMode"] === 'edit') {
-    axios.put(`/news/${state.newsPosts["editPostId"]}`, data, conf)
-      .then(() => {
-        state.newsPosts["editorMode"] = 'create';
-      })
-      .catch()
+    return await axios.put(`/news/${state.newsPosts["editPostId"]}`, data, conf)
   }
 };
 
-const fetchData = async (state, setNewsPost) => {
+const fetchNewsPost = async (state) => {
   if (state.newsPosts["editorMode"] === 'edit') {
-    await axios.get('/news/' + state.newsPosts["editPostId"])
-      .then(response => {
-        setNewsPost(response.data.post["post_body"]);
-      })
-      .catch(error => console.log(error))
+    return await axios.get(`/news/${state.newsPosts["editPostId"]}`)
   }
 };
 
-export { savePost, fetchData }
+export { savePost, fetchNewsPost }

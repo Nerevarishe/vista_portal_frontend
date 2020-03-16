@@ -35,7 +35,14 @@ const Reducer = (state, action) => {
           editorMode: 'create'
         }
       };
-
+    case 'RESET_POST':
+      return {
+        ...state,
+        newsPosts: {
+          editPostId: null,
+          editorMode: 'create'
+        }
+      };
     // Modal cases
     case "DELETE_NEWS_POST_MODAL":
       // Data items:

@@ -1,4 +1,4 @@
-import React, {createContext, useReducer} from "react";
+import React, { createContext, useReducer } from "react";
 import Reducer from '../reducers/reducer'
 
 
@@ -8,7 +8,7 @@ const initialState = {
     isLoggedIn: false
   },
   newsPosts: {
-    editPostId: "",
+    editPostId: null,
     editorMode: "create"
   },
   modal: {

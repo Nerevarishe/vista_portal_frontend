@@ -8,27 +8,33 @@ import editorConfiguration from "../../../configs/CKEditorConf";
 
 import { Context } from "../../../stores/store";
 
-import { savePost, fetchData } from "./utils";
+import { savePost, fetchNewsPost } from "./utils";
 import Button from "../../../components/Button";
 import PrivateRoute from "../../../Auth/PrivateRoute";
 
 const AddNewsPage = () => {
   const [state, dispatch] = useContext(Context);
-  const [newsPost, setNewsPost] = useState('');
+  const [newsPost, setNewsPost] = useState(null);
 
   useEffect(() =>{
-    fetchData(state, setNewsPost)
-      .then()
-      .catch();
+    const fetchData = async () => {
+      const response = await fetchNewsPost(state);
+      if (response && response.status === 200) {
+        setNewsPost(response.data.post["post_body"]);
+      }
+    };
+    if (state.newsPosts["editorMode"] === "edit") {
+      fetchData();
+    }
   }, [state]);
 
-  const savePostHandler = () => {
-    savePost(state, newsPost)
-      .then(() => {
-        history.push("/news");
-      })
-      .catch(() => {
-      });
+  const savePostHandler = async () => {
+    const response = await savePost(state, newsPost);
+    if (response.status === 200 || response.status === 201){
+      dispatch({type: "RESET_POST"});
+      history.push("/");
+    }
+
   };
 
   return (
@@ -43,7 +49,6 @@ const AddNewsPage = () => {
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
-          // console.log({event, editor, data});
           setNewsPost(data)
         }}
       />
