@@ -6,6 +6,9 @@ import { fetchNews, deleteNewsPost } from "./utils";
 import moment from "moment";
 import Button from "../../components/Button";
 
+import Grid from '@material-ui/core/Grid';
+import Paper from "@material-ui/core/Paper";
+
 import classes from "./NewsPage.module.css";
 
 
@@ -87,42 +90,47 @@ const NewsPage = () => {
 
   return (
       <React.Fragment>
-        <p>News Page</p>
-        <Button clicked={redirectToAddNewsPage} text="Add News Button" />
-        <br/>
-        <Button
-          clicked={prevPageHandler}
-          btnDisabled={!newsPostState["postsPageHasPrev"]}
-          text="Prev Page"
-        />
-        <Button
-          clicked={nextPageHandler}
-          btnDisabled={!newsPostState["postsPageHasNext"]}
-          text="Next Page"
-        />
-        {newsPostState.news.map(post => (
-          <div key={post["_id"]["$oid"]} className={classes.newsPostCard}>
-            <p>
-              {moment(post["date_created"]["$date"]).local().format("DD-MM-YYYY HH:mm")}
-            </p>
-            <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
-            <div>
-              <Button id={post["_id"]["$oid"]} clicked={editNewsHandler.bind(this)} text="Edit" />
-              <Button id={post["_id"]["$oid"]} clicked={deleteNewsHandler.bind(this)} text="Delete" />
-            </div>
-          </div>
-        ))}
-        <br/>
-        <Button
-          clicked={prevPageHandler}
-          btnDisabled={!newsPostState["postsPageHasPrev"]}
-          text="Prev Page"
-        />
-        <Button
-          clicked={nextPageHandler}
-          btnDisabled={!newsPostState["postsPageHasNext"]}
-          text="Next Page"
-        />
+          <p>News Page</p>
+          <Button clicked={redirectToAddNewsPage} text="Add News Button" />
+          <br/>
+          <Button
+            clicked={prevPageHandler}
+            btnDisabled={!newsPostState["postsPageHasPrev"]}
+            text="Prev Page"
+          />
+          <Button
+            clicked={nextPageHandler}
+            btnDisabled={!newsPostState["postsPageHasNext"]}
+            text="Next Page"
+          />
+          <Grid container spacing={3} direction={"column"} justify={"flex-start"} alignItems={"center"}>
+          {newsPostState.news.map(post => (
+            <Grid item xs={12}>
+              {/*<div key={post["_id"]["$oid"]} className={classes.newsPostCard}>*/}
+              <Paper key={post["_id"]["$oid"]} elevation={5}>
+                <p>
+                  {moment(post["date_created"]["$date"]).local().format("DD-MM-YYYY HH:mm")}
+                </p>
+                <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
+                <div>
+                  <Button id={post["_id"]["$oid"]} clicked={editNewsHandler.bind(this)} text="Edit" />
+                  <Button id={post["_id"]["$oid"]} clicked={deleteNewsHandler.bind(this)} text="Delete" />
+                </div>
+              </Paper>
+            </Grid>
+          ))}
+          </Grid>
+          <br/>
+          <Button
+            clicked={prevPageHandler}
+            btnDisabled={!newsPostState["postsPageHasPrev"]}
+            text="Prev Page"
+          />
+          <Button
+            clicked={nextPageHandler}
+            btnDisabled={!newsPostState["postsPageHasNext"]}
+            text="Next Page"
+          />
       </React.Fragment>
   );
 };
