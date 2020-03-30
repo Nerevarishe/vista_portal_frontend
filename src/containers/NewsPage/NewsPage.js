@@ -4,13 +4,11 @@ import { history } from "../../App";
 import { fetchNews, deleteNewsPost } from "./utils";
 
 import moment from "moment";
-import Button from "../../components/Button";
 
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from "@material-ui/core/Paper";
-
-import classes from "./NewsPage.module.css";
-
+import NewsPostCardButtons from "../../components/NewsPostCardButtons";
 
 const NewsPage = () => {
   const [state, dispatch] = useContext(Context);
@@ -25,6 +23,7 @@ const NewsPage = () => {
   const [needFetchNews, setNeedFetchNews] = useState(0);
 
   useEffect( () =>{
+    dispatch({type: 'RESET_POST'});
     const fetchData = async () => {
       const response = await fetchNews(page, perPage);
       setNewsPostsState({
@@ -37,20 +36,19 @@ const NewsPage = () => {
     fetchData();
   }, [page, perPage, needFetchNews]);
 
-  const editNewsHandler = (event) => {
-    dispatch({type: 'EDIT_POST', data: event.target.id});
+  const editNewsHandler = (id) => {
+    dispatch({type: 'EDIT_POST', data: id});
     history.push("/news/add_news_post");
   };
 
-  const deleteNewsHandler = (event) => {
-    event.persist();
+  const deleteNewsHandler = (id) => {
     dispatch({type: 'DELETE_NEWS_POST_MODAL', data: [
         // Array that contains:
         // Element id that must be deleted
-        event.target.id,
+        id,
         // function, which exec when button 'Yes' pressed in modal
         async () => {
-          const response = await deleteNewsPost(event);
+          const response = await deleteNewsPost(id);
           if (response.status === 200) {
             dispatch({type: "RESET_MODAL"});
             setNeedFetchNews(prevState => prevState + 1);
@@ -62,6 +60,27 @@ const NewsPage = () => {
           dispatch({type: "RESET_MODAL"})
         }
       ]});
+
+  // const deleteNewsHandler = (event) => {
+  //   event.persist();
+  //   dispatch({type: 'DELETE_NEWS_POST_MODAL', data: [
+  //       // Array that contains:
+  //       // Element id that must be deleted
+  //       event.target.id,
+  //       // function, which exec when button 'Yes' pressed in modal
+  //       async () => {
+  //         const response = await deleteNewsPost(event);
+  //         if (response.status === 200) {
+  //           dispatch({type: "RESET_MODAL"});
+  //           setNeedFetchNews(prevState => prevState + 1);
+  //         }
+  //         dispatch({type: "RESET_MODAL"});
+  //       },
+  //       // function, which exec when button 'No' pressed in modal
+  //       () => {
+  //         dispatch({type: "RESET_MODAL"})
+  //       }
+  //     ]});
   };
 
   const prevPageHandler = () => {
@@ -90,47 +109,68 @@ const NewsPage = () => {
 
   return (
       <React.Fragment>
-          <p>News Page</p>
-          <Button clicked={redirectToAddNewsPage} text="Add News Button" />
-          <br/>
-          <Button
-            clicked={prevPageHandler}
-            btnDisabled={!newsPostState["postsPageHasPrev"]}
-            text="Prev Page"
-          />
-          <Button
-            clicked={nextPageHandler}
-            btnDisabled={!newsPostState["postsPageHasNext"]}
-            text="Next Page"
-          />
-          <Grid container spacing={3} direction={"column"} justify={"flex-start"} alignItems={"center"}>
-          {newsPostState.news.map(post => (
-            <Grid item xs={12}>
-              {/*<div key={post["_id"]["$oid"]} className={classes.newsPostCard}>*/}
-              <Paper key={post["_id"]["$oid"]} elevation={5}>
-                <p>
-                  {moment(post["date_created"]["$date"]).local().format("DD-MM-YYYY HH:mm")}
-                </p>
-                <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
-                <div>
-                  <Button id={post["_id"]["$oid"]} clicked={editNewsHandler.bind(this)} text="Edit" />
-                  <Button id={post["_id"]["$oid"]} clicked={deleteNewsHandler.bind(this)} text="Delete" />
-                </div>
-              </Paper>
-            </Grid>
-          ))}
+        <p>News Page</p>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={redirectToAddNewsPage}
+        >
+          Add News Button
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={prevPageHandler}
+          disabled={!newsPostState["postsPageHasPrev"]}
+        >
+          Prev Page
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={nextPageHandler}
+          disabled={!newsPostState["postsPageHasNext"]}
+        >
+            Next Page
+        </Button>
+        <Grid container spacing={3} direction={"column"} justify={"flex-start"} alignItems={"center"}>
+        {newsPostState.news.map(post => (
+          <Grid item xs={12}>
+            {/*<div key={post["_id"]["$oid"]} className={classes.newsPostCard}>*/}
+            <Paper key={post["_id"]["$oid"]} elevation={5}>
+              <p>
+                {moment(post["date_created"]["$date"]).local().format("DD-MM-YYYY HH:mm")}
+              </p>
+              <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
+              <div>
+                {/*<Button id={post["_id"]["$oid"]} clicked={editNewsHandler.bind(this)} text="Edit" />*/}
+                {/*<Button id={post["_id"]["$oid"]} clicked={deleteNewsHandler.bind(this)} text="Delete" />*/}
+                <NewsPostCardButtons
+                  id={post["_id"]["$oid"]}
+                  handleEdit={editNewsHandler.bind(this)}
+                  handleDelete={deleteNewsHandler.bind(this)}
+                />
+              </div>
+            </Paper>
           </Grid>
-          <br/>
-          <Button
-            clicked={prevPageHandler}
-            btnDisabled={!newsPostState["postsPageHasPrev"]}
-            text="Prev Page"
-          />
-          <Button
-            clicked={nextPageHandler}
-            btnDisabled={!newsPostState["postsPageHasNext"]}
-            text="Next Page"
-          />
+        ))}
+        </Grid>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={prevPageHandler}
+          disabled={!newsPostState["postsPageHasPrev"]}
+        >
+          Prev Page
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={nextPageHandler}
+          disabled={!newsPostState["postsPageHasNext"]}
+        >
+          Next Page
+        </Button>
       </React.Fragment>
   );
 };
