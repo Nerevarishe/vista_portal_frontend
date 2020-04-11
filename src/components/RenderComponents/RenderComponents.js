@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import NavigationBar from "../NavigationBar";
+import Navigation from "../Navigation";
 import TryLoginAfterIndexPageFirstLoad from "../../Auth/TryLoginAfterIndexPageFirstLoad";
 import {Route, Router, Switch, Link} from "react-router-dom";
 import NewsPage from "../../containers/NewsPage";
@@ -25,34 +25,9 @@ const RenderComponents = () => {
     <React.Fragment>
       { modal }
       <Router history={history}>
-        {/*<NavigationBar />*/}
+        {/*<Navigation />*/}
         <TryLoginAfterIndexPageFirstLoad />
-
-        <Route
-          path="/"
-          render={({ location }) => (
-            <React.Fragment>
-              <AppBar position="sticky">
-                <Tabs value={location.pathname}>
-                  <Tab label="Новости" value="/" component={Link} to={'/'} />
-                  <Tab label="Деффектура" value="/defectura" component={Link} to={'/defectura'} />
-                  <Tab label="Вики" value="/wiki" component={Link} to={'/wiki'} />
-                  <Tab label="Войти" value="/Login" component={Link} to={'/login'} />
-                </Tabs>
-              </AppBar>
-              <Switch>
-                <Route exact path="/" component={NewsPage} />
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/login/auth" component={Login} />
-                <Route exact path="/logout" component={Logout} />
-                <Route exact path="/news" component={NewsPage} />
-                <Route exact path="/news/add_news_post" component={AddNewsPage} />
-                <Route exact path="/defectura" component={DefecturaPage} />
-                <Route path="*" component={NotFoundPage} />
-              </Switch>
-            </React.Fragment>
-          )}
-        />
+        <Navigation />
       </Router>
     </React.Fragment>
   );

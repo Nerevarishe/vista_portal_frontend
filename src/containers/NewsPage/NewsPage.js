@@ -60,27 +60,6 @@ const NewsPage = () => {
           dispatch({type: "RESET_MODAL"})
         }
       ]});
-
-  // const deleteNewsHandler = (event) => {
-  //   event.persist();
-  //   dispatch({type: 'DELETE_NEWS_POST_MODAL', data: [
-  //       // Array that contains:
-  //       // Element id that must be deleted
-  //       event.target.id,
-  //       // function, which exec when button 'Yes' pressed in modal
-  //       async () => {
-  //         const response = await deleteNewsPost(event);
-  //         if (response.status === 200) {
-  //           dispatch({type: "RESET_MODAL"});
-  //           setNeedFetchNews(prevState => prevState + 1);
-  //         }
-  //         dispatch({type: "RESET_MODAL"});
-  //       },
-  //       // function, which exec when button 'No' pressed in modal
-  //       () => {
-  //         dispatch({type: "RESET_MODAL"})
-  //       }
-  //     ]});
   };
 
   const prevPageHandler = () => {
