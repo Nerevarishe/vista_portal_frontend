@@ -33,7 +33,7 @@ const Navigation = (props) => {
             <Tabs value={location.pathname}>
               <Tab label="Новости" value="/" component={Link} to={'/'} />
               <Tab label="Деффектура" value="/defectura" component={Link} to={'/defectura'} />
-              <Tab label="Вики" value="/wiki" component={Link} to={'/wiki'} />
+              <Tab label="Вики" value="/wiki" component={Link} to={'/wiki'} target="_blank" />
               {navBarUser}
             </Tabs>
           </AppBar>

@@ -2,7 +2,7 @@ import React from "react";
 
 import { createBrowserHistory } from "history";
 
-import "./App.css";
+// import "./App.css";
 
 import Store from "./stores/store";
 import RenderComponents from "./components/RenderComponents";
