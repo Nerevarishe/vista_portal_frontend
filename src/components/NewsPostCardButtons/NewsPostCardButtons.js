@@ -1,22 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    height: 45,
-    transform: 'translateZ(0px)',
-    flexGrow: 1
-  }
-}));
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const NewsPostCardButtons = (props) => {
-  const classes = useStyles();
-
   const handleEdit = () => {
     props.handleEdit(props.id);
   };
@@ -26,9 +16,23 @@ const NewsPostCardButtons = (props) => {
   };
 
   return (
-    <div className={classes.root}>
-      <Button variant="outlined" color="primary" onClick={handleEdit}><EditIcon /></Button>
-      <Button variant="outlined" color="secondary" onClick={handleDelete}><DeleteIcon /></Button>
+    <div>
+      <Button
+        variant="outlined"
+        color="primary"
+        size="small"
+        onClick={handleEdit}
+      >
+        <EditIcon />
+      </Button>
+      <Button
+        variant="outlined"
+        color="secondary"
+        size="small"
+        onClick={handleDelete}
+      >
+        <DeleteIcon />
+      </Button>
     </div>
   );
 };

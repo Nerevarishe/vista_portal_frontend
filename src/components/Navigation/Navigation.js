@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Context } from "../../stores/store";
 import { Link, Route, Router, Switch } from "react-router-dom";
-import AppBar from "@material-ui/core/AppBar"
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import NewsPage from "../../containers/NewsPage";
 import LoginPage from "../../containers/LoginPage";
 import Login from "../../Auth/Login";
@@ -15,13 +15,16 @@ import NotFoundPage from "../../containers/NotFoundPage";
 const Navigation = (props) => {
   const [state, dispatch] = useContext(Context);
   const username = state.auth["username"];
-  let navBarUser = <Tab label="Войти" value="/Login" component={Link} to={'/login'} />;
+  let navBarUser = (
+    <Tab label="Войти" value="/Login" component={Link} to={"/login"} />
+  );
   if (username) {
-    navBarUser =
+    navBarUser = (
       <React.Fragment>
         <Tab label={username} disabled />
-        <Tab label="Выйти" value="/Logout" component={Link} to={'/logout'} />
+        <Tab label="Выйти" value="/Logout" component={Link} to={"/logout"} />
       </React.Fragment>
+    );
   }
 
   return (
@@ -31,9 +34,20 @@ const Navigation = (props) => {
         <React.Fragment>
           <AppBar position="sticky">
             <Tabs value={location.pathname}>
-              <Tab label="Новости" value="/" component={Link} to={'/'} />
-              <Tab label="Деффектура" value="/defectura" component={Link} to={'/defectura'} />
-              <Tab label="Вики" value="/wiki" component={Link} to={'/wiki'} target="_blank" />
+              <Tab label="Новости" value="/" component={Link} to={"/"} />
+              <Tab
+                label="Деффектура"
+                value="/defectura"
+                component={Link}
+                to={"/defectura"}
+              />
+              <Tab
+                label="Вики"
+                value="/wiki"
+                component={Link}
+                to={"/wiki"}
+                target="_blank"
+              />
               {navBarUser}
             </Tabs>
           </AppBar>

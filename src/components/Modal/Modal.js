@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import Backdrop from "../Backdrop";
 import classes from "./Modal.module.css";
 import { Context } from "../../stores/store";
@@ -9,17 +9,19 @@ const Modal = () => {
 
   let buttons = null;
   if (state.modal.buttons === "YN") {
-    buttons =
+    buttons = (
       <div className={classes["YNButtons"]}>
-        <Button text={"Yes"} clicked={state.modal.handlers.btnYesHandler}/>
-        <Button text={"No"} clicked={state.modal.handlers.btnNoHandler}/>
+        <Button text={"Yes"} clicked={state.modal.handlers.btnYesHandler} />
+        <Button text={"No"} clicked={state.modal.handlers.btnNoHandler} />
       </div>
+    );
   }
   if (state.modal.buttons === "OK") {
-    buttons =
+    buttons = (
       <div className={classes["OKButton"]}>
-        <Button text={"OK"}/>
+        <Button text={"OK"} />
       </div>
+    );
   }
 
   return (

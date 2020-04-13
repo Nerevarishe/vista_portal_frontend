@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import Navigation from "../Navigation";
 import TryLoginAfterIndexPageFirstLoad from "../../Auth/TryLoginAfterIndexPageFirstLoad";
 import { Router } from "react-router-dom";
@@ -13,7 +13,7 @@ const RenderComponents = () => {
 
   return (
     <React.Fragment>
-      { modal }
+      {modal}
       <Router history={history}>
         <TryLoginAfterIndexPageFirstLoad />
         <Navigation />

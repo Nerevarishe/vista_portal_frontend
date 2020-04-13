@@ -7,7 +7,7 @@ const PrivateRoute = (props) => {
   if (state.auth["isLoggedIn"] === false) {
     history.push("/login");
   }
-  return props.children
+  return props.children;
 };
 
-export default PrivateRoute
+export default PrivateRoute;

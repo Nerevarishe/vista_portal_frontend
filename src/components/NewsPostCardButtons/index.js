@@ -1,1 +1,1 @@
-export { default } from './NewsPostCardButtons';
+export { default } from "./NewsPostCardButtons";

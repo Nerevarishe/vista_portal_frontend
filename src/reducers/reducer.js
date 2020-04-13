@@ -1,47 +1,47 @@
 const Reducer = (state, action) => {
   switch (action.type) {
     // User authentication cases
-    case 'LOGIN_USER':
+    case "LOGIN_USER":
       return {
         ...state,
         auth: {
           username: action.data,
-          isLoggedIn: true
-        }
+          isLoggedIn: true,
+        },
       };
-    case 'LOGOUT_USER':
+    case "LOGOUT_USER":
       return {
         ...state,
         auth: {
           username: null,
-          isLoggedIn: false
-        }
+          isLoggedIn: false,
+        },
       };
 
     // News Posts cases
-    case 'EDIT_POST':
+    case "EDIT_POST":
       return {
         ...state,
         newsPosts: {
           editPostId: action.data,
-          editorMode: 'edit'
-        }
+          editorMode: "edit",
+        },
       };
-    case 'DELETE_POST':
+    case "DELETE_POST":
       return {
         ...state,
         newsPosts: {
           editPostId: action.data,
-          editorMode: 'create'
-        }
+          editorMode: "create",
+        },
       };
-    case 'RESET_POST':
+    case "RESET_POST":
       return {
         ...state,
         newsPosts: {
           editPostId: null,
-          editorMode: 'create'
-        }
+          editorMode: "create",
+        },
       };
     // Modal cases
     case "DELETE_NEWS_POST_MODAL":
@@ -58,9 +58,9 @@ const Reducer = (state, action) => {
           buttons: "YN",
           handlers: {
             btnYesHandler: action.data[1],
-            btnNoHandler: action.data[2]
-          }
-        }
+            btnNoHandler: action.data[2],
+          },
+        },
       };
     case "RESET_MODAL":
       return {
@@ -70,8 +70,8 @@ const Reducer = (state, action) => {
           data: null,
           content: null,
           buttons: null,
-          handlers: null
-        }
+          handlers: null,
+        },
       };
 
     default:

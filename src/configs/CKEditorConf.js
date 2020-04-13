@@ -48,7 +48,7 @@ const editorConfiguration = {
     PasteFromOffice,
     Table,
     TableToolbar,
-    SimpleUploadAdapter
+    SimpleUploadAdapter,
   ],
   toolbar: {
     items: [
@@ -69,15 +69,20 @@ const editorConfiguration = {
       "insertTable",
       "mediaEmbed",
       "undo",
-      "redo"
-    ]
+      "redo",
+    ],
   },
   image: {
-    toolbar: ["imageStyle:full", "imageStyle:side", "|", "imageTextAlternative"]
+    toolbar: [
+      "imageStyle:full",
+      "imageStyle:side",
+      "|",
+      "imageTextAlternative",
+    ],
   },
   simpleUpload: {
     // The URL that the images are uploaded to.
-    uploadUrl: "http://localhost:5000/uploads/"
+    uploadUrl: "http://localhost:5000/uploads/",
 
     // Headers sent along with the XMLHttpRequest to the upload server.
     // headers: {
@@ -86,10 +91,10 @@ const editorConfiguration = {
     // }
   },
   table: {
-    contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"]
+    contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
   },
   // This value must be kept in sync with the language defined in webpack.config.js.
-  language: "ru"
+  language: "ru",
 };
 
 export default editorConfiguration;

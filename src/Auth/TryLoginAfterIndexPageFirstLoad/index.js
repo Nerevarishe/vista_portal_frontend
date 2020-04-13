@@ -1,1 +1,1 @@
-export { default } from "./TryLoginAfterIndexPageFirstLoad"
+export { default } from "./TryLoginAfterIndexPageFirstLoad";

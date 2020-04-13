@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { history } from "../../../App";
 
 import CKEditor from "@ckeditor/ckeditor5-react";
@@ -16,7 +16,7 @@ const AddNewsPage = () => {
   const [state, dispatch] = useContext(Context);
   const [newsPost, setNewsPost] = useState(null);
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchData = async () => {
       const response = await fetchNewsPost(state);
       if (response && response.status === 200) {
@@ -30,11 +30,10 @@ const AddNewsPage = () => {
 
   const savePostHandler = async () => {
     const response = await savePost(state, newsPost);
-    if (response.status === 200 || response.status === 201){
-      dispatch({type: "RESET_POST"});
+    if (response.status === 200 || response.status === 201) {
+      dispatch({ type: "RESET_POST" });
       history.push("/");
     }
-
   };
 
   return (
@@ -44,15 +43,15 @@ const AddNewsPage = () => {
         editor={ClassicEditor}
         config={editorConfiguration}
         data={newsPost}
-        onInit={editor => {
+        onInit={(editor) => {
           editor.editing.view.focus();
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
-          setNewsPost(data)
+          setNewsPost(data);
         }}
       />
-      <Button clicked={savePostHandler} text="Save"/>
+      <Button clicked={savePostHandler} text="Save" />
     </PrivateRoute>
   );
 };
