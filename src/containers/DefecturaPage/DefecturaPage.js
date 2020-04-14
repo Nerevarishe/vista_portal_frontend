@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../components/Button";
-import { fetchDefectura, addDefectura } from "./utils";
+import { Link } from "react-router-dom";
 import moment from "moment";
+
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Table from "react-bootstrap/Table";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+
+import { fetchDefectura, addDefectura, delDefectura, toggleZD } from "./utils";
 
 const DefecturaPage = () => {
   const [drugName, setDrugName] = useState("");
@@ -30,69 +39,118 @@ const DefecturaPage = () => {
       employeeName
     );
     if (isDefecturaAdded) {
+      setDrugName("");
+      setComment("");
+      setNeedFetchDefectura((prevState) => prevState + 1);
+      setDisableButton(false);
+    }
+  };
+  const delDefecturaRecordHandler = async (event) => {
+    setDisableButton(true);
+    const isDefecturaRecordDeleted = await delDefectura(event.target.id);
+    if (isDefecturaRecordDeleted) {
+      setNeedFetchDefectura((prevState) => prevState + 1);
+      setDisableButton(false);
+    }
+  };
+
+  const toggleZDHandler = async (event) => {
+    setDisableButton(true);
+    const isZDToggled = await toggleZD(event.target.id);
+    if (isZDToggled) {
       setNeedFetchDefectura((prevState) => prevState + 1);
       setDisableButton(false);
     }
   };
 
   return (
-    <React.Fragment>
-      <div>
-        <p>Defectura</p>
-        <input
-          type="text"
-          onChange={(event) => setDrugName(event.target.value)}
-        />
-        <p>Comment</p>
-        <input
-          type="text"
-          onChange={(event) => setComment(event.target.value)}
-        />
-        <p>Name</p>
-        <input
-          type="text"
-          onChange={(event) => setEmployeeName(event.target.value)}
-        />
-        <br />
-        <br />
-        <Button
-          text={"Send"}
-          clicked={addDefecturaHandler}
-          btnDisabled={disableButton}
-        />
-      </div>
-      <div>
-        {defData ? (
-          defData.map((card) => (
-            <div key={card._id}>
-              <div>{moment(card._id).local().format("DD-MM-YYYY")}</div>
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Drug Name</th>
-                      <th>Comment</th>
-                      <th>Employee Name</th>
+    // TODO: Refactor - Split to components!
+    <Container>
+      <Form>
+        <Form.Group>
+          <Form.Label>Дефектура</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Название препарата"
+            onChange={(event) => setDrugName(event.target.value)}
+            value={drugName}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Комментарий</Form.Label>
+          <Form.Control
+            type="text"
+            onChange={(event) => setComment(event.target.value)}
+            value={comment}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Имя сотрудника</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Имя"
+            onChange={(event) => setEmployeeName(event.target.value)}
+            value={employeeName}
+          />
+        </Form.Group>
+        <Button onClick={addDefecturaHandler}>Сохранить</Button>
+      </Form>
+      {defData ? (
+        defData.map((card) => (
+          <Card key={card._id} className="mt-3">
+            <Card.Header>
+              {moment(card._id).local().format("DD-MM-YYYY")}
+            </Card.Header>
+            <Card.Body>
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>Drug Name</th>
+                    <th>Comment</th>
+                    <th>Employee Name</th>
+                    <th>Options</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {card.drugs.map((drug) => (
+                    <tr key={drug.objectId}>
+                      <td>{drug.drugName}</td>
+                      <td>{drug.comment ? drug.comment : null}</td>
+                      <td>{drug.employeeName}</td>
+                      <td>
+                        <Button
+                          id={drug.objectId}
+                          onClick={delDefecturaRecordHandler}
+                          className="ml-1 mr-1"
+                        >
+                          D
+                        </Button>
+                        <Button
+                          id={drug.objectId}
+                          onClick={toggleZDHandler}
+                          className="ml-1 mr-1"
+                        >
+                          ZD
+                        </Button>
+                        <a
+                          href={`https://www.google.com/search?q=${drug.drugName}`}
+                          target="_blank"
+                          className="btn btn-primary ml-1 mr-1"
+                        >
+                          G
+                        </a>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {card.drugs.map((drug) => (
-                      <tr key={drug.objectId}>
-                        <td>{drug.drugName}</td>
-                        <td>{drug.comment ? drug.comment : null}</td>
-                        <td>{drug.employeeName}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    </React.Fragment>
+                  ))}
+                </tbody>
+              </Table>
+            </Card.Body>
+          </Card>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
+    </Container>
   );
 };
 

@@ -17,4 +17,14 @@ const addDefectura = async (drugName, comment, employeeName) => {
   return response.status === 201;
 };
 
-export { fetchDefectura, addDefectura };
+const delDefectura = async (id) => {
+  const response = await axios.delete(`/defectura/${id}`);
+  return response.status === 200;
+};
+
+const toggleZD = async (id) => {
+  const response = await axios.put(`/defectura/${id}`);
+  return response.status === 200;
+};
+
+export { fetchDefectura, addDefectura, delDefectura, toggleZD };
