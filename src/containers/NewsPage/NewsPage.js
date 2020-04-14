@@ -150,8 +150,8 @@ const NewsPage = () => {
                     <CardActions>
                       <NewsPostCardButtons
                         id={post["_id"]["$oid"]}
-                        handleEdit={editNewsHandler.bind(this)}
-                        handleDelete={deleteNewsHandler.bind(this)}
+                        handleEdit={editNewsHandler}
+                        handleDelete={deleteNewsHandler}
                       />
                     </CardActions>
                   </Grid>
