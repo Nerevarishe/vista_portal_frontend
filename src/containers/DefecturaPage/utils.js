@@ -27,4 +27,15 @@ const toggleZD = async (id) => {
   return response.status === 200;
 };
 
-export { fetchDefectura, addDefectura, delDefectura, toggleZD };
+const delDefecturaDayCard = async (date) => {
+  const response = await axios.delete(`/defectura/card/${date}`);
+  return response.status === 200;
+};
+
+export {
+  fetchDefectura,
+  addDefectura,
+  delDefectura,
+  toggleZD,
+  delDefecturaDayCard,
+};

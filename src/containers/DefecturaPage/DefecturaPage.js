@@ -10,7 +10,13 @@ import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import { fetchDefectura, addDefectura, delDefectura, toggleZD } from "./utils";
+import {
+  fetchDefectura,
+  addDefectura,
+  delDefectura,
+  toggleZD,
+  delDefecturaDayCard,
+} from "./utils";
 
 const DefecturaPage = () => {
   const [drugName, setDrugName] = useState("");
@@ -62,6 +68,16 @@ const DefecturaPage = () => {
       setDisableButton(false);
     }
   };
+  const delDefecturaDayCardHandler = async (event) => {
+    setDisableButton(true);
+    const isDefecturaDayCardDeleted = await delDefecturaDayCard(
+      event.target.id
+    );
+    if (isDefecturaDayCardDeleted) {
+      setNeedFetchDefectura((prevState) => prevState + 1);
+      setDisableButton(false);
+    }
+  };
 
   return (
     // TODO: Refactor - Split to components!
@@ -100,6 +116,13 @@ const DefecturaPage = () => {
           <Card key={card._id} className="mt-3">
             <Card.Header>
               {moment(card._id).local().format("DD-MM-YYYY")}
+              <Button
+                id={card._id}
+                className="float-right"
+                onClick={delDefecturaDayCardHandler}
+              >
+                D
+              </Button>
             </Card.Header>
             <Card.Body>
               <Table responsive>
