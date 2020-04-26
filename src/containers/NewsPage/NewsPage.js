@@ -6,8 +6,6 @@ import { fetchNews, deleteNewsPost } from "./utils";
 import moment from "moment";
 
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import NewsPostCardButtons from "../../components/NewsPostCardButtons";
