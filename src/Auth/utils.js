@@ -1,8 +1,5 @@
-import {
-  axiosInstance as axios,
-  axiosWithoutInterceptors,
-} from "../configs/axiosInstance";
-import { db, REFRESH_TOKEN, ACCESS_TOKEN } from "../configs/dexieConfig";
+import { axiosInstance as axios } from "../config/axiosInstance";
+import { db, REFRESH_TOKEN, ACCESS_TOKEN } from "../config/dexieConfig";
 import { history } from "../App";
 
 const saveRefreshToken = async (refreshToken) => {
@@ -13,8 +10,18 @@ const loadRefreshToken = async () => {
   return await db.tokensTable.where("id").equals(1).first();
 };
 
-const saveAccessToken = async (AccessToken) => {
-  await db.tokensTable.put({ id: 2, accessToken: AccessToken });
+const userIdentityFromAccessToken = async (accessToken) => {
+  const base64Url = accessToken.split(".")[1];
+  const decodedValue = JSON.parse(window.atob(base64Url));
+  console.log(decodedValue);
+  return {
+    username: decodedValue["identity"],
+    role: decodedValue["user_claims"]["role"],
+  };
+};
+
+const saveAccessToken = async (accessToken) => {
+  await db.tokensTable.put({ id: 2, accessToken: accessToken });
 };
 
 const loadAccessToken = async () => {
@@ -36,6 +43,7 @@ const loginUser = async (username, password) => {
   const refreshToken = response.data["refresh_token"];
   await saveAccessToken(accessToken);
   await saveRefreshToken(refreshToken);
+  return await userIdentityFromAccessToken(accessToken);
 };
 
 const autoLoginUser = async () => {

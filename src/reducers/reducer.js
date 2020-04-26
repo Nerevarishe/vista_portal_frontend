@@ -5,7 +5,8 @@ const Reducer = (state, action) => {
       return {
         ...state,
         auth: {
-          username: action.data,
+          username: action.data["username"],
+          role: action.data["role"],
           isLoggedIn: true,
         },
       };
@@ -14,6 +15,7 @@ const Reducer = (state, action) => {
         ...state,
         auth: {
           username: null,
+          role: null,
           isLoggedIn: false,
         },
       };

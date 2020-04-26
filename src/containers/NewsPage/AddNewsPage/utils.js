@@ -1,4 +1,4 @@
-import { axiosInstance as axios } from "../../../configs/axiosInstance";
+import { axiosInstance as axios } from "../../../config/axiosInstance";
 import { loadAccessToken } from "../../../Auth/utils";
 
 const savePost = async (state, newsPost) => {

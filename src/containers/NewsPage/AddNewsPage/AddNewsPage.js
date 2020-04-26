@@ -4,7 +4,7 @@ import { history } from "../../../App";
 import CKEditor from "@ckeditor/ckeditor5-react";
 
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import editorConfiguration from "../../../configs/CKEditorConf";
+import editorConfiguration from "../../../config/CKEditorConf";
 
 import { Context } from "../../../stores/store";
 

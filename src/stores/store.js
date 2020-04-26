@@ -4,6 +4,7 @@ import Reducer from "../reducers/reducer";
 const initialState = {
   auth: {
     username: null,
+    role: null,
     isLoggedIn: false,
   },
   newsPosts: {

@@ -1,4 +1,4 @@
-import { axiosInstance as axios } from "../../configs/axiosInstance";
+import { axiosInstance as axios } from "../../config/axiosInstance";
 
 const fetchDefectura = async () => {
   const response = await axios.get("/defectura/");
