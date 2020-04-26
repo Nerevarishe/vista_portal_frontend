@@ -8,6 +8,7 @@ import moment from "moment";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import ModeratorPanel from "../../components/ModeratorPanel";
 import NewsPostCardButtons from "../../components/NewsPostCardButtons";
 import NewsPrevNextButtons from "../../components/NewsPrevNextButtons";
 
@@ -94,7 +95,9 @@ const NewsPage = () => {
   return (
     <React.Fragment>
       <Container>
-        <Button onClick={redirectToAddNewsPage}>Add News Button</Button>
+        <ModeratorPanel>
+          <Button onClick={redirectToAddNewsPage}>Add News Button</Button>
+        </ModeratorPanel>
         <NewsPrevNextButtons
           postsPageHasPrev={!newsPostState["postsPageHasPrev"]}
           prevPageHandler={prevPageHandler}
