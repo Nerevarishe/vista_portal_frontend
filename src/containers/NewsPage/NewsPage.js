@@ -106,7 +106,7 @@ const NewsPage = () => {
         />
         <div className="ck-content">
           {newsPostState.news.map((post) => (
-            <Card className="mt-3">
+            <Card key={post._id["$oid"]} className="mt-3">
               <Card.Header>
                 <p>
                   {moment(post["date_created"]["$date"])
