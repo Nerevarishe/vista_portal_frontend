@@ -5,21 +5,13 @@ import { fetchNews, deleteNewsPost } from "./utils";
 
 import moment from "moment";
 
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import NewsPostCardButtons from "../../components/NewsPostCardButtons";
 import NewsPrevNextButtons from "../../components/NewsPrevNextButtons";
-
-const useStyles = makeStyles({
-  root: {
-    display: "inline-block",
-    width: "auto",
-  },
-});
 
 const NewsPage = () => {
   const [state, dispatch] = useContext(Context);
@@ -32,7 +24,6 @@ const NewsPage = () => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [needFetchNews, setNeedFetchNews] = useState(0);
-  const classes = useStyles();
 
   useEffect(() => {
     dispatch({ type: "RESET_POST" });
@@ -102,73 +93,42 @@ const NewsPage = () => {
 
   return (
     <React.Fragment>
-      <Grid
-        container
-        spacing={3}
-        direction={"column"}
-        justify={"flex-start"}
-        alignItems={"center"}
-      >
-        <Grid item xs={12}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={redirectToAddNewsPage}
-          >
-            Add News Button
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <NewsPrevNextButtons
-            postsPageHasPrev={!newsPostState["postsPageHasPrev"]}
-            prevPageHandler={prevPageHandler}
-            postsPageHasNext={!newsPostState["postsPageHasNext"]}
-            nextPageHandler={nextPageHandler}
-          />
-        </Grid>
+      <Container>
+        <Button onClick={redirectToAddNewsPage}>Add News Button</Button>
+        <NewsPrevNextButtons
+          postsPageHasPrev={!newsPostState["postsPageHasPrev"]}
+          prevPageHandler={prevPageHandler}
+          postsPageHasNext={!newsPostState["postsPageHasNext"]}
+          nextPageHandler={nextPageHandler}
+        />
         {newsPostState.news.map((post) => (
-          <Grid item xs={12} key={post["_id"]["$oid"]}>
-            <Card className={classes.root}>
-              <Grid
-                container
-                direction="column"
-                justify="flex-start"
-                alignItems="flex-start"
-              >
-                <Grid item xs={12}>
-                  <CardContent>
-                    <p>
-                      {moment(post["date_created"]["$date"])
-                        .local()
-                        .format("DD-MM-YYYY HH:mm")}
-                    </p>
-                    <p
-                      dangerouslySetInnerHTML={{ __html: post["post_body"] }}
-                    />
-                  </CardContent>
-                  <Grid item xs={12}>
-                    <CardActions>
-                      <NewsPostCardButtons
-                        id={post["_id"]["$oid"]}
-                        handleEdit={editNewsHandler}
-                        handleDelete={deleteNewsHandler}
-                      />
-                    </CardActions>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Card>
-          </Grid>
+          <Card className="mt-3">
+            <Card.Header>
+              <p>
+                {moment(post["date_created"]["$date"])
+                  .local()
+                  .format("DD-MM-YYYY HH:mm")}
+              </p>
+            </Card.Header>
+            <Card.Body>
+              <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
+            </Card.Body>
+            <Card.Footer>
+              <NewsPostCardButtons
+                id={post["_id"]["$oid"]}
+                handleEdit={editNewsHandler}
+                handleDelete={deleteNewsHandler}
+              />
+            </Card.Footer>
+          </Card>
         ))}
-        <Grid item xs={12}>
-          <NewsPrevNextButtons
-            postsPageHasPrev={!newsPostState["postsPageHasPrev"]}
-            prevPageHandler={prevPageHandler}
-            postsPageHasNext={!newsPostState["postsPageHasNext"]}
-            nextPageHandler={nextPageHandler}
-          />
-        </Grid>
-      </Grid>
+        <NewsPrevNextButtons
+          postsPageHasPrev={!newsPostState["postsPageHasPrev"]}
+          prevPageHandler={prevPageHandler}
+          postsPageHasNext={!newsPostState["postsPageHasNext"]}
+          nextPageHandler={nextPageHandler}
+        />
+      </Container>
     </React.Fragment>
   );
 };

@@ -1,26 +1,28 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 const NewsPrevNextButtons = (props) => {
   return (
-    <div>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={props.prevPageHandler}
-        disabled={props.postsPageHasPrev}
-      >
-        Prev Page
-      </Button>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={props.nextPageHandler}
-        disabled={props.postsPageHasNext}
-      >
-        Next Page
-      </Button>
-    </div>
+    <Row className="justify-content-center">
+      <Col xs="auto" className="mt-1">
+        <Button
+          onClick={props.prevPageHandler}
+          disabled={props.postsPageHasPrev}
+        >
+          Prev Page
+        </Button>
+      </Col>
+      <Col xs="auto" className="mt-1">
+        <Button
+          onClick={props.nextPageHandler}
+          disabled={props.postsPageHasNext}
+        >
+          Next Page
+        </Button>
+      </Col>
+    </Row>
   );
 };
 
