@@ -13,6 +13,8 @@ import Card from "react-bootstrap/Card";
 import NewsPostCardButtons from "../../components/NewsPostCardButtons";
 import NewsPrevNextButtons from "../../components/NewsPrevNextButtons";
 
+import "./NewsPage.css";
+
 const NewsPage = () => {
   const [state, dispatch] = useContext(Context);
 
@@ -101,27 +103,29 @@ const NewsPage = () => {
           postsPageHasNext={!newsPostState["postsPageHasNext"]}
           nextPageHandler={nextPageHandler}
         />
-        {newsPostState.news.map((post) => (
-          <Card className="mt-3">
-            <Card.Header>
-              <p>
-                {moment(post["date_created"]["$date"])
-                  .local()
-                  .format("DD-MM-YYYY HH:mm")}
-              </p>
-            </Card.Header>
-            <Card.Body>
-              <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
-            </Card.Body>
-            <Card.Footer>
-              <NewsPostCardButtons
-                id={post["_id"]["$oid"]}
-                handleEdit={editNewsHandler}
-                handleDelete={deleteNewsHandler}
-              />
-            </Card.Footer>
-          </Card>
-        ))}
+        <div className="ck-content">
+          {newsPostState.news.map((post) => (
+            <Card className="mt-3">
+              <Card.Header>
+                <p>
+                  {moment(post["date_created"]["$date"])
+                    .local()
+                    .format("DD-MM-YYYY HH:mm")}
+                </p>
+              </Card.Header>
+              <Card.Body>
+                <p dangerouslySetInnerHTML={{ __html: post["post_body"] }} />
+              </Card.Body>
+              <Card.Footer>
+                <NewsPostCardButtons
+                  id={post["_id"]["$oid"]}
+                  handleEdit={editNewsHandler}
+                  handleDelete={deleteNewsHandler}
+                />
+              </Card.Footer>
+            </Card>
+          ))}
+        </div>
         <NewsPrevNextButtons
           postsPageHasPrev={!newsPostState["postsPageHasPrev"]}
           prevPageHandler={prevPageHandler}

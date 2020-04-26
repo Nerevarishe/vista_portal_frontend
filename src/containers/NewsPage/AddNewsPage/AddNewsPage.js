@@ -9,7 +9,8 @@ import editorConfiguration from "../../../configs/CKEditorConf";
 import { Context } from "../../../stores/store";
 
 import { savePost, fetchNewsPost } from "./utils";
-import Button from "../../../components/Button";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 import PrivateRoute from "../../../Auth/PrivateRoute";
 
 const AddNewsPage = () => {
@@ -38,20 +39,24 @@ const AddNewsPage = () => {
 
   return (
     <PrivateRoute>
-      <p>Add News Page</p>
-      <CKEditor
-        editor={ClassicEditor}
-        config={editorConfiguration}
-        data={newsPost}
-        onInit={(editor) => {
-          editor.editing.view.focus();
-        }}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          setNewsPost(data);
-        }}
-      />
-      <Button clicked={savePostHandler} text="Save" />
+      <Container>
+        <p>Add News Page</p>
+        <CKEditor
+          editor={ClassicEditor}
+          config={editorConfiguration}
+          data={newsPost}
+          onInit={(editor) => {
+            editor.editing.view.focus();
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            setNewsPost(data);
+          }}
+        />
+        <Button className="mt-1" onClick={savePostHandler}>
+          Save
+        </Button>
+      </Container>
     </PrivateRoute>
   );
 };
