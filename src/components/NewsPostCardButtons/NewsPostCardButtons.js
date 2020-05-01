@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-
 const NewsPostCardButtons = (props) => {
   const handleEdit = () => {
     props.handleEdit(props.id);
@@ -13,16 +12,10 @@ const NewsPostCardButtons = (props) => {
 
   return (
     <div>
-      <Button
-        className="m-1"
-        onClick={handleEdit}
-      >
+      <Button className="m-1" onClick={handleEdit}>
         Edit
       </Button>
-      <Button
-        className="m-1"
-        onClick={handleDelete}
-      >
+      <Button className="m-1" onClick={handleDelete}>
         Delete
       </Button>
     </div>

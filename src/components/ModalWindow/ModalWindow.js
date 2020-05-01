@@ -3,7 +3,6 @@ import { Context } from "../../stores/store";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-
 const ModalWindow = (props) => {
   const [state, dispatch] = useContext(Context);
 
@@ -11,8 +10,12 @@ const ModalWindow = (props) => {
   if (state.modal.buttons === "YN") {
     buttons = (
       <React.Fragment>
-        <Button onClick={state.modal.handlers.btnYesHandler} className="m-1">Yes</Button>
-        <Button onClick={state.modal.handlers.btnNoHandler} className="m-1">No</Button>
+        <Button onClick={state.modal.handlers.btnYesHandler} className="m-1">
+          Yes
+        </Button>
+        <Button onClick={state.modal.handlers.btnNoHandler} className="m-1">
+          No
+        </Button>
       </React.Fragment>
     );
   }

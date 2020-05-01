@@ -12,13 +12,11 @@ const RenderComponents = () => {
 
   const handleModalClose = () => {
     dispatch({ type: "RESET_POST" });
-  }
+  };
 
-  let modal = state.modal.showModal
-    ? <ModalWindow
-      show={state.modal.showModal}
-      hide={handleModalClose} />
-    : null;
+  let modal = state.modal.showModal ? (
+    <ModalWindow show={state.modal.showModal} hide={handleModalClose} />
+  ) : null;
 
   return (
     <React.Fragment>
