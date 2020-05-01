@@ -1,10 +1,6 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 const NewsPostCardButtons = (props) => {
   const handleEdit = () => {
@@ -18,20 +14,16 @@ const NewsPostCardButtons = (props) => {
   return (
     <div>
       <Button
-        variant="outlined"
-        color="primary"
-        size="small"
+        className="m-1"
         onClick={handleEdit}
       >
-        <EditIcon />
+        Edit
       </Button>
       <Button
-        variant="outlined"
-        color="secondary"
-        size="small"
+        className="m-1"
         onClick={handleDelete}
       >
-        <DeleteIcon />
+        Delete
       </Button>
     </div>
   );
