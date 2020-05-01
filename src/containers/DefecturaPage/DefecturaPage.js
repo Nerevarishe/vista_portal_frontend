@@ -106,7 +106,9 @@ const DefecturaPage = () => {
             value={employeeName}
           />
         </Form.Group>
-        <Button onClick={addDefecturaHandler}>Сохранить</Button>
+        <Button onClick={addDefecturaHandler} disabled={disableButton}>
+          Сохранить
+        </Button>
       </Form>
       {defData ? (
         defData.map((card) => (
@@ -117,6 +119,7 @@ const DefecturaPage = () => {
                 id={card._id}
                 className="float-right"
                 onClick={delDefecturaDayCardHandler}
+                disabled={disableButton}
               >
                 D
               </Button>
@@ -142,6 +145,7 @@ const DefecturaPage = () => {
                           id={drug.objectId}
                           onClick={delDefecturaRecordHandler}
                           className="ml-1 mr-1"
+                          disabled={disableButton}
                         >
                           D
                         </Button>
@@ -149,6 +153,7 @@ const DefecturaPage = () => {
                           id={drug.objectId}
                           onClick={toggleZDHandler}
                           className="ml-1 mr-1"
+                          disabled={disableButton}
                         >
                           ZD
                         </Button>
@@ -168,6 +173,7 @@ const DefecturaPage = () => {
           </Card>
         ))
       ) : (
+        // TODO: Change Loading to spinner component on all page
         <p>Loading...</p>
       )}
     </Container>
