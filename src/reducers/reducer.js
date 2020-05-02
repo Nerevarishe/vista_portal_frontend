@@ -64,6 +64,24 @@ const Reducer = (state, action) => {
           },
         },
       };
+    case "DELETE_DEFECTURA_RECORD_MODAL":
+      // Data items:
+      // 0 - id of defectura item,
+      // 1 - function that handling deletion,
+      // 2 - function that reset modal state and close it
+      return {
+        ...state,
+        modal: {
+          showModal: true,
+          data: action.data[0],
+          content: "Delete defectura record?",
+          buttons: "YN",
+          handlers: {
+            btnYesHandler: action.data[1],
+            btnNoHandler: action.data[2],
+          },
+        },
+      };
     case "RESET_MODAL":
       return {
         ...state,
