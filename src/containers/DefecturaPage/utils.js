@@ -27,8 +27,7 @@ const toggleZD = async (id) => {
 };
 
 const delDefecturaDayCard = async (date) => {
-  const response = await axios.delete(`/defectura/card/${date}`);
-  return response.status === 200;
+  return await axios.delete(`/defectura/card/${date}`);
 };
 
 export {

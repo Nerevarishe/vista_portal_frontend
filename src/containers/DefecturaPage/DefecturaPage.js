@@ -74,7 +74,7 @@ const DefecturaPage = (props) => {
           dispatch({ type: "RESET_MODAL" });
           setDisableButton(false);
         },
-      ],
+      ]
     });
     // const isDefecturaRecordDeleted = await delDefectura(event.target.id);
     // if (isDefecturaRecordDeleted) {
@@ -91,15 +91,34 @@ const DefecturaPage = (props) => {
       setDisableButton(false);
     }
   };
-  const delDefecturaDayCardHandler = async (event) => {
+
+  // TODO: Check if record deleted from ZD on deleting defectura card. If true - change sorting method in backend.
+  const delDefecturaDayCardModal = async (id) => {
     setDisableButton(true);
-    const isDefecturaDayCardDeleted = await delDefecturaDayCard(
-      event.target.id
-    );
-    if (isDefecturaDayCardDeleted) {
-      setNeedFetchDefectura((prevState) => prevState + 1);
-      setDisableButton(false);
-    }
+    dispatch({
+      type: "DELETE_DEFECTURA_CARD_MODAL",
+      data: [
+        // Array that contains:
+        // Element id that must be deleted
+        id,
+        // function, which exec when button 'Yes' pressed in modal
+        async () => {
+          const response = await delDefecturaDayCard(id);
+          if (response) {
+            dispatch({ type: "RESET_MODAL" });
+            setNeedFetchDefectura((prevState) => prevState + 1);
+            setDisableButton(false);
+          }
+          dispatch({ type: "RESET_MODAL" });
+          setDisableButton(false);
+        },
+        // function, which exec when button 'No' pressed in modal
+        () => {
+          dispatch({ type: "RESET_MODAL" });
+          setDisableButton(false);
+        },
+      ]
+    });
   };
 
   return (
@@ -142,9 +161,8 @@ const DefecturaPage = (props) => {
             <Card.Header>
               {moment(card._id).local().format("DD-MM-YYYY")}
               <Button
-                id={card._id}
                 className="float-right"
-                onClick={delDefecturaDayCardHandler}
+                onClick={() => { delDefecturaDayCardModal(card._id) }}
                 disabled={disableButton}
               >
                 D
