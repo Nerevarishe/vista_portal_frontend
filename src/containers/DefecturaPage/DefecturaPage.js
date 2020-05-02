@@ -76,11 +76,6 @@ const DefecturaPage = (props) => {
         },
       ]
     });
-    // const isDefecturaRecordDeleted = await delDefectura(event.target.id);
-    // if (isDefecturaRecordDeleted) {
-    //   setNeedFetchDefectura((prevState) => prevState + 1);
-    //   setDisableButton(false);
-    // }
   };
 
   const toggleZDHandler = async (event) => {
@@ -93,6 +88,7 @@ const DefecturaPage = (props) => {
   };
 
   // TODO: Check if record deleted from ZD on deleting defectura card. If true - change sorting method in backend.
+  // TODO: Confirmed!
   const delDefecturaDayCardModal = async (id) => {
     setDisableButton(true);
     dispatch({
@@ -124,6 +120,30 @@ const DefecturaPage = (props) => {
   return (
     // TODO: Refactor - Split to components!
     <Container>
+      {drugsInZD ?
+        (
+          <Table responsive>
+            <thead>
+              <tr>
+                <th>Drug Name</th>
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody>
+              {drugsInZD.map(
+                drug => (
+                  <tr>
+                    <td>{drug["drug_name"]}</td>
+                    <td>
+                      <Button id={drug["_id"]["$oid"]} onClick={toggleZDHandler}>ZD</Button>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </Table>
+        ) : null
+      }
       <Form>
         <Form.Group>
           <Form.Label>Дефектура</Form.Label>
