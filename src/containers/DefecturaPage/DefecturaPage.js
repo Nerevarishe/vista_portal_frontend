@@ -11,13 +11,12 @@ import Button from "react-bootstrap/Button";
 import {
   fetchDefectura,
   addDefectura,
-  delDefectura,
+  delDefecturaRecord,
   toggleZD,
   delDefecturaDayCard,
 } from "./utils";
-import { deleteNewsPost } from "../NewsPage/utils";
 
-const DefecturaPage = () => {
+const DefecturaPage = (props) => {
   const [drugName, setDrugName] = useState("");
   const [comment, setComment] = useState("");
   const [employeeName, setEmployeeName] = useState("");
@@ -51,7 +50,7 @@ const DefecturaPage = () => {
       setDisableButton(false);
     }
   };
-  const delDefecturaRecordHandler = async (id) => {
+  const delDefecturaRecordModal = async (id) => {
     setDisableButton(true);
     dispatch({
       type: "DELETE_DEFECTURA_RECORD_MODAL",
@@ -61,8 +60,8 @@ const DefecturaPage = () => {
         id,
         // function, which exec when button 'Yes' pressed in modal
         async () => {
-          const response = await delDefectura(id);
-          if (response.status === 200) {
+          const response = await delDefecturaRecord(id);
+          if (response) {
             dispatch({ type: "RESET_MODAL" });
             setNeedFetchDefectura((prevState) => prevState + 1);
             setDisableButton(false);
@@ -169,8 +168,7 @@ const DefecturaPage = () => {
                       <td>{drug.employeeName}</td>
                       <td>
                         <Button
-                          id={drug.objectId}
-                          onClick={delDefecturaRecordHandler}
+                          onClick={() => { delDefecturaRecordModal(drug.objectId) }}
                           className="ml-1 mr-1"
                           disabled={disableButton}
                         >
@@ -200,9 +198,9 @@ const DefecturaPage = () => {
           </Card>
         ))
       ) : (
-        // TODO: Change Loading to spinner component on all page
-        <p>Loading...</p>
-      )}
+          // TODO: Change Loading to spinner component on all page
+          <p>Loading...</p>
+        )}
     </Container>
   );
 };
