@@ -22,8 +22,8 @@ const DefecturaPage = (props) => {
   const [employeeName, setEmployeeName] = useState("");
   const [disableButton, setDisableButton] = useState(false);
   const [needFetchDefectura, setNeedFetchDefectura] = useState(0);
-  const [defData, setDefData] = useState(null);
-  const [drugsInZD, setDrugsInZD] = useState(null);
+  const [defData, setDefData] = useState([]);
+  const [drugsInZD, setDrugsInZD] = useState([]);
   const [state, dispatch] = useContext(Context);
 
   useEffect(() => {
@@ -31,7 +31,6 @@ const DefecturaPage = (props) => {
       const data = await fetchDefectura();
       await setDefData(data["drugs"]);
       await setDrugsInZD(data["drugsInZd"]);
-      await console.log(data);
     };
     fetchData();
   }, [needFetchDefectura]);
@@ -50,6 +49,7 @@ const DefecturaPage = (props) => {
       setDisableButton(false);
     }
   };
+
   const delDefecturaRecordModal = async (id) => {
     setDisableButton(true);
     dispatch({
@@ -74,7 +74,7 @@ const DefecturaPage = (props) => {
           dispatch({ type: "RESET_MODAL" });
           setDisableButton(false);
         },
-      ]
+      ],
     });
   };
 
@@ -113,37 +113,35 @@ const DefecturaPage = (props) => {
           dispatch({ type: "RESET_MODAL" });
           setDisableButton(false);
         },
-      ]
+      ],
     });
   };
 
   return (
     // TODO: Refactor - Split to components!
     <Container>
-      {drugsInZD ?
-        (
-          <Table responsive>
-            <thead>
+      {drugsInZD.length ? (
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Drug Name</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {drugsInZD.map((drug) => (
               <tr>
-                <th>Drug Name</th>
-                <th>Options</th>
+                <td>{drug["drug_name"]}</td>
+                <td>
+                  <Button id={drug["_id"]["$oid"]} onClick={toggleZDHandler}>
+                    ZD
+                  </Button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {drugsInZD.map(
-                drug => (
-                  <tr>
-                    <td>{drug["drug_name"]}</td>
-                    <td>
-                      <Button id={drug["_id"]["$oid"]} onClick={toggleZDHandler}>ZD</Button>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </Table>
-        ) : null
-      }
+            ))}
+          </tbody>
+        </Table>
+      ) : null}
       <Form>
         <Form.Group>
           <Form.Label>Дефектура</Form.Label>
@@ -175,14 +173,16 @@ const DefecturaPage = (props) => {
           Сохранить
         </Button>
       </Form>
-      {defData ? (
+      {defData.length ? (
         defData.map((card) => (
           <Card key={card._id} className="mt-3">
             <Card.Header>
               {moment(card._id).local().format("DD-MM-YYYY")}
               <Button
                 className="float-right"
-                onClick={() => { delDefecturaDayCardModal(card._id) }}
+                onClick={() => {
+                  delDefecturaDayCardModal(card._id);
+                }}
                 disabled={disableButton}
               >
                 D
@@ -206,7 +206,9 @@ const DefecturaPage = (props) => {
                       <td>{drug.employeeName}</td>
                       <td>
                         <Button
-                          onClick={() => { delDefecturaRecordModal(drug.objectId) }}
+                          onClick={() => {
+                            delDefecturaRecordModal(drug.objectId);
+                          }}
                           className="ml-1 mr-1"
                           disabled={disableButton}
                         >
@@ -236,9 +238,9 @@ const DefecturaPage = (props) => {
           </Card>
         ))
       ) : (
-          // TODO: Change Loading to spinner component on all page
-          <p>Loading...</p>
-        )}
+        // TODO: Change Loading to spinner component on all page
+        <p>Loading...</p>
+      )}
     </Container>
   );
 };
