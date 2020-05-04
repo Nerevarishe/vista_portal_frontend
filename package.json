@@ -28,8 +28,6 @@
     "@ckeditor/ckeditor5-table": "^18.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^18.0.0",
     "@ckeditor/ckeditor5-typing": "^18.0.0",
-    "@material-ui/core": "^4.9.7",
-    "@material-ui/icons": "^4.9.1",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
