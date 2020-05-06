@@ -3,13 +3,13 @@ FROM node:alpine as build
 WORKDIR /srv
 
 RUN apk update \
-&& apk install git \
+&& apk add git \
 && git clone https://github.com/Nerevarishe/vista-portal-frontend.git \
 && apk del git
 
 WORKDIR /srv/vista-portal-frontend
 
-RUN npm install && npm build
+RUN npm install && npm run build
 
 
 FROM nginx:alpine
