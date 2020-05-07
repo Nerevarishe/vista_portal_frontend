@@ -8,7 +8,7 @@ import {
 import { history } from "../App";
 
 const axiosBaseConfig = {
-  baseURL: "http://10.0.0.1:5000",
+  baseURL: "http://192.168.56.112:5000",
 };
 
 // Base axios instance
