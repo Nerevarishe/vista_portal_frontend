@@ -66,3 +66,9 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+### Commands to build dev image with node libraries and image for testing:
+`docker build -t nerevarishe/vista-portal-frontend:dev -f Dockerfile-dev-first-stage . --no-cache`
+then run
+`docker build -t nerevarishe/vista-portal-frontend:latest -f Dockerfile-dev-second-stage . --no-cache`

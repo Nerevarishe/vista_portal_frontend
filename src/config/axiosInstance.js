@@ -8,6 +8,7 @@ import {
 import { history } from "../App";
 
 const axiosBaseConfig = {
+  // TODO: Set this to appropriate url in production!
   baseURL: "http://192.168.56.112:5000",
 };
 

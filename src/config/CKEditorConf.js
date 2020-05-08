@@ -82,7 +82,8 @@ const editorConfiguration = {
   },
   simpleUpload: {
     // The URL that the images are uploaded to.
-    uploadUrl: "http://localhost:5000/uploads/",
+    // TODO: Set this to appropriate url in production!
+    uploadUrl: "http://192.168.56.112:5000/uploads/",
 
     // Headers sent along with the XMLHttpRequest to the upload server.
     // headers: {
