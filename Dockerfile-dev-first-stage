@@ -1,4 +1,5 @@
 FROM node:alpine as dependencies
 WORKDIR /srv/vista-portal-frontend
 COPY package* ./
-RUN npm install
+RUN apk add tzdata \
+&& npm install
